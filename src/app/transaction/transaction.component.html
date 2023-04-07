@@ -1,0 +1,81 @@
+<div class="container">
+    <div class="title" style="color: #f69c9c !important; background: transparent!important;">
+        <h2>Product Order Form</h2>
+    </div>
+  <div class="d-flex">
+    <form [formGroup]="transactionForm" (ngSubmit)="onSubmit(transactionForm)">
+      <label>
+        <span class="productId" style="margin-top: 1px">Product Id <span class="required">*</span></span>
+        <input type="text" formControlName="productId" placeholder="Enter Product Id">
+      </label>
+      <label>
+        <span class="manufacturerId" style="margin-top: 1px">Manufactuer Id<span class="required">*</span></span>
+        <input type="text" formControlName="manufacturerId" placeholder="Enter Manufacturer Id">
+      </label>
+      <label>
+        <span class="noOfUnits" style="margin-top: 1px">No Of Units<span class="required">*</span></span>
+        <input type="text" formControlName="noOfUnits" placeholder="Enter No Of Units">
+      </label>
+      <label>
+        <span class="weightOfUnit" style="margin-top: 1px">Weight of Unit<span class="required">*</span></span>
+        <input type="text" formControlName="weightOfUnit" placeholder="Enter Weight of unit">
+      </label>
+      <label>
+        <span class="totalCost" style="margin-top: 1px">Total Amount<span class="required">*</span></span>
+        <input type="text" formControlName="totalCost" placeholder="Total Amount">
+      </label>
+
+      <label>
+        <span class="phone" style="margin-top: 1px;">Phone</span>
+        <input type="text" formControlName="phone" placeholder="Mobile Number">
+      </label>
+
+      <label>
+        <span class="emailAddress" style="margin-top: 1px;">Email Address</span>
+        <input type="text" formControlName="emailAddress" placeholder="Email Address">
+      </label>
+
+      <div>
+        <input type="radio" formControlName="dbt" name="dbt" value="Direct Bank Transfer"> Direct Bank Transfer
+      </div>
+      <!--<p>
+          Make your payment directly into our bank account. Please use your Order ID as the payment reference. 
+          Your order will not be shipped until the funds have cleared in our account.
+      </p>-->
+      <br/>
+      <div>
+        <input type="radio" formControlName="dbt" name="dbt" value="COD"> Cash on Delivery
+      </div>
+      <br/>
+      <div>
+        <input type="radio"  formControlName="dbt" name="dbt" value="NetBanking"> NetBanking <span>
+        <img src="assets/images/CardInfo.jpeg" alt="Unable to load the image" width="50">
+        </span>
+      </div>
+
+      <br/>
+      <button type="submit" style="width: 50% !important;">Place Order</button>
+    </form>
+
+    <div class="Yorder">
+      <table>
+        <tr>
+          <th colspan="2">Your order</th>
+        </tr>
+        <tr>
+          <td>Product Name x {{noOfUnits}}(Qty)</td>
+          <td>₹ {{totalCost}}</td>
+        </tr>
+        <tr>
+            <td>Shipping</td>
+            <td>Free shipping</td>
+          </tr>
+        <tr>
+          <td>Total Cost</td>
+          <td>₹ {{totalCost}}</td>
+        </tr>
+      </table><br>
+    </div><!-- Yorder -->
+
+   </div>
+  </div>

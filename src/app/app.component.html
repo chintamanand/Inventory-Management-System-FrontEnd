@@ -1,0 +1,77 @@
+<header *ngIf="showHead">
+
+<nav class="navbar navbar-expand-lg navbar-dark navbar-header-color static-top">
+  <div class="container">
+    <a class="navbar-brand" href="/home">
+      <img src="assets/images/SampleImage-2.jpg" alt="Unable to display Logo" height="36">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" 
+            [routerLink]="['/home']" aria-current="page">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" 
+            [routerLink]="['/manufactuers']">Manufacturers</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" 
+            [routerLink]="['/products']">Products</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" 
+            [routerLink]="['/transactions']" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Transactions
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="/home">Purchase</a></li>
+            <li><a class="dropdown-item" href="/home">Sale</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive="active" (click) = "logout()">Logout</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+</header>
+
+
+<!--Testing-->
+<header *ngIf="showHead1">
+
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-header-color static-top">
+    <div class="container">
+      <a class="navbar-brand" href="/home">
+        <img src="assets/images/SampleImage-2.jpg" alt="Unable to display Logo" height="36">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" 
+              [routerLink]="['/authz']">Login</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+  </header>
+<!--Testing-->
+
+
+<!--<app-header *ngIf="showHead"></app-header>-->
+<router-outlet></router-outlet>

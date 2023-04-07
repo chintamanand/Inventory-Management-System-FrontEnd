@@ -1,0 +1,168 @@
+<div class="container">
+    <div class="row">
+      <div class="col">
+        
+        <br/>
+        <h3>Manufacturer Data Updation</h3>
+        <!--Form to Add or Update the Manufacturer Data-->
+        <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)">
+          
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Id</label>
+            <div class="col-sm-9">
+              <input type="text" formControlName="manufacturerId" placeholder="Manufacturer Id(Optional)">
+            </div>
+          </div>  
+
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Company</label>
+            <div class="col-sm-9">
+              <input type="text" formControlName="manufacturerCompanyName" placeholder="Enter Company Name">
+            </div>
+          </div>  
+
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Email</label>
+            <div class="col-sm-9">
+              <input type="text" formControlName="companyEmailAddress" placeholder="Enter Email">
+            </div>
+          </div>  
+
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Regd Date</label>
+            <div class="col-sm-9">
+              <input type="date" formControlName="dateOfReg" placeholder = "Date of Registered" style = "width: 41%">
+            </div>
+          </div>  
+
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Place</label>
+            <div class="col-sm-9">
+              <input type="text" formControlName="regtdAt" placeholder="Registration Place">
+            </div>
+          </div> 
+
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Phone</label>
+            <div class="col-sm-9">
+              <input type="text" formControlName="phoneNumber" placeholder="Phone Number">
+            </div>
+          </div> 
+
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">GSTIN</label>
+            <div class="col-sm-9">
+              <input type="text" formControlName="companyGSTIN" placeholder="Company GSTIN">
+            </div>
+          </div> 
+
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">State</label>
+
+            <div class="col-sm-9" style = "padding-bottom: 5px;">
+            <select formControlName = "state" (change)="onStateSelect($event)" class = "col-sm-1 col-form-label" style = "width: 41%">
+              <option disabled>Select State</option>
+              <option *ngFor = "let state of states">{{state.state_name}}</option>
+            </select>
+          </div>
+
+          </div> 
+
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">City</label>
+            <div class="col-sm-9" style = "padding-bottom: 5px;">
+            <select formControlName = "city" class = "col-sm-2 col-form-label" style = "width: 41%">
+              <option disabled>Select City</option>
+              <option *ngFor = "let city of cities">{{city.city_name}}</option>
+            </select>
+            </div>
+          </div> 
+
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Street</label>
+            <div class="col-sm-9">
+              <input type="text" formControlName="street" placeholder="Street">
+            </div>
+          </div> 
+
+          <!--<div class="form-group row">
+            <label for="inputPassword" class="col-sm-3 col-form-label">Password</label>
+            <div class="col-sm-9">
+              <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+            </div>
+          </div>  
+
+          <div>
+            <label>
+              Message:
+              <input formControlName="message" placeholder="Your message">
+            </label>
+          </div>--> 
+          <button class="btn btn-primary" type="submit">Create/Update</button>
+        </form>
+      </div>
+
+      <div class="col">
+        <br/>
+        <!--testing<div>
+          <canvasjs-chart [options]="chartOptions" [styles]="{width: '100%', height:'360px'}"></canvasjs-chart>    
+        </div>   -->
+
+        <h3 style="margin-left: 20px;">Manfacturer Location View</h3>
+        <div style="display: block" style="height: 370px;width: 370px;">
+          <canvas mdbChart
+            [chartType]="chartType"
+            [datasets]="chartDatasets"
+            [labels]="chartLabels"
+            [colors]="chartColors"
+            [options]="chartOptions"
+            [legend]="true"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)">
+          </canvas>
+        </div>
+
+      </div>
+    </div>
+
+    <br/><br/>
+    <h3>Manufacturer Data</h3>
+    <div class="row">
+      <div class="col">
+        <!--<style>
+           table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            }
+          </style>-->
+        <table class="table table-hover">
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Company Email Address</th>
+            <!--<th scope="col">Registered Year</th>-->
+            <th scope="col">Phone Number</th>
+            <th scope="col">Full Address</th>
+          </tr>
+          
+          <tr *ngFor="let manufacturer of manufacturers">
+              <!--<td>select option need to be included</td>-->
+              <td>{{manufacturer.manufacturerId}}</td>
+              <td>{{manufacturer.manufacturerCompanyName}}</td>
+              <td>{{manufacturer.companyEmailAddress}}</td>
+              <!--<td>{{manufacturer.dateOfReg}}</td>-->
+              <td>{{manufacturer.phoneNumber}}</td>
+              <td>{{manufacturer.address}}</td>
+          </tr>
+
+        </table>
+
+      </div>
+      
+    </div>
+
+
+    <br/>
+    <button class="btn btn-primary" (click)="exportData()">Export Data</button>
+  </div>
+  <br/>
