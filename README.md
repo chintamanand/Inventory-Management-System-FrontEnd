@@ -1,3 +1,8 @@
+# Inventory-Management-System-FrontEnd
+Inventory Management Application Developed Using Java, Spring Boot, Angular and MySQL
+
+This Project is completed created for Learning Purpose only. They might number of mistakes in it.
+But Code wise, it is working.
 # Ivms
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.3.
