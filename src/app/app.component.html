@@ -37,7 +37,8 @@
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" (click) = "logout()">Logout</a>
+          <a class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" 
+          [routerLink]="['/authz']" (click) = "logout()">Logout</a>
         </li>
       </ul>
     </div>

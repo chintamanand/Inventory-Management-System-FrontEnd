@@ -24,7 +24,7 @@ export class AuthInterceptorService implements HttpInterceptor {
     console.log("Calling GetUser() Method -- " + JSON.stringify(this.tokenStorageService.getUser()));
     const token = this.tokenStorageService.getToken();
     if (token != null) {
-      console.log("Token is not NULL -- " + JSON.stringify(token));
+      console.log("Token is -- " + JSON.stringify(token));
       authReq = req.clone({ headers: req.headers.set(TOKEN_HEADER_KEY, "Bearer " + token) });
       console.log("Token added to HTTP request");
       console.log("Complete Request after Inteception -- " + JSON.stringify(authReq));
