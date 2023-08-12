@@ -6,6 +6,8 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Products } from '../models/products.model';
 import { TokenStorageService } from './token-storage.service';
+import { CommonService } from './common.service';
+import { NotificationService } from './notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +16,8 @@ export class ProductService {
   length: number;
 
   constructor(private httpclient: HttpClient, private tokenStorageService: TokenStorageService,
-              private router: Router) { }
+    private router: Router, private commonService: CommonService,
+    private notificationService: NotificationService) { }
 
   product: Products = new Products();
 
@@ -37,11 +40,15 @@ export class ProductService {
 
   getAllProductData(): Observable<Products[]> {
     this.products = this.httpclient.get<Products[]>(this.baseUrl + this.getPrdUrl);
-    return this.products;
+    if (this.products == null || this.products == undefined) {
+      this.notificationService.showError("Server Issue - Unable to Load Product Data", "Data Issue");
+      return this.products;
+    } else {
+      return this.products;
+    }
   }
 
-  createOrSaveData(form: FormGroup): void {
-    console.log("Product Form Data -- " + form.value);
+  createOrSaveData(form: FormGroup): Observable<Products[]> {
     const productData: Products = new Products();
     productData.productId = form.value.productId;
     productData.manufacturerId = form.value.manufacturerId;
@@ -55,17 +62,15 @@ export class ProductService {
     productData.productReceived = form.value.productReceived;
     productData.productLocation = form.value.productLocation;
 
-    console.log(JSON.stringify(productData));
-
-    this.httpclient.post<Products>(this.baseUrl + this.updPrdUrl, productData)
-      .subscribe({
-        next: (response) => {
-          this.product = response;
-          window.location.reload();
-        },
-        error: (error) => console.log(error),
-      });
-
+    if (this.commonService.isEmptyOrNull(form.value.manufacturerId)
+      || this.commonService.isEmptyOrNull(form.value.productName)
+      || this.commonService.isEmptyOrNull(form.value.productCategory)) {
+      this.notificationService.showWarning("Data Issue - Name/Manufacturer Id/Category", "Form Validation");
+      return new Observable<Products[]>();
+    } else {
+      this.products = this.httpclient.post<Products[]>(this.baseUrl + this.updPrdUrl, productData);
+      return this.products;
+    }
   }
 
 }

@@ -1,7 +1,5 @@
-
 export class Products {
    
-    //sync the dataType in actual DTO and this angular DTO
     productId: number;
 
     productName: string;

@@ -1,6 +1,4 @@
-<html>
-<head>
-</head>
+
 <body>
 
 	<!-- <header *ngIf="showHead1">
@@ -31,8 +29,6 @@
 	<div class="form-container sign-up-container">
 		<form [formGroup]="signUpForm" (ngSubmit)="register(signUpForm)">
 			<h1>Create Account</h1>
-			
-			<span>or use your email for registration</span>
 			<input type="text" placeholder="UserName" formControlName="username" name="username"/>
 			<input type="email" placeholder="Email" formControlName="email" name="email"/>
 			<input type="password" placeholder="Password" formControlName="password" name="password"/>
@@ -41,12 +37,10 @@
 	</div>
 	<div class="form-container sign-in-container">
 		<form [formGroup]="signInForm" (ngSubmit)="login(signInForm)">
-			<h1>Sign in</h1>
-			
-			<span>or use your account</span>
+			<h1>Sign In</h1>
 			<input type="text" placeholder="UserName" formControlName="username" name="username" />
 			<input type="password" placeholder="Password" formControlName="password" name="password"/>
-			<a href="#">Forgot your password?</a>
+			<a (click) ="forgotPassword()">Forgot your password?</a>
 			<button type="submit">Sign In</button>
 		</form>
 
@@ -66,7 +60,3 @@
 		</div>
 	</div>
 </div>
-
-
-</body>
-</html>

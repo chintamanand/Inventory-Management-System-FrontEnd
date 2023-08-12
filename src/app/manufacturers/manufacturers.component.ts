@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Manufacturer } from '../models/manufacturer.model';
 import { ManufacturerService } from '../services/manufacturer.service';
 import { CommonService } from '../services/common.service';
@@ -8,6 +8,7 @@ import { City } from '../models/city.model';
 import { TokenStorageService } from '../services/token-storage.service';
 import { Router } from '@angular/router';
 import { MatTable } from '@angular/material/table';
+import { NotificationService } from '../services/notification.service';
 
 @Component({
   selector: 'app-manufacturers',
@@ -19,7 +20,7 @@ export class ManufacturersComponent implements OnInit {
   myForm: FormGroup;
   manufacturers: Manufacturer[] = [];
   columnsToDisplay: string[] = ['manufacturerId', 'manufacturerCompanyName', 'companyEmailAddress', 'phoneNumber', 'address'];
-  @ViewChild('manfTable1') matTable: MatTable<Element>;
+  @ViewChild('manfTable') matTable: MatTable<Element>;
 
   states: State[] = [];
   cities: City[] = [];
@@ -56,7 +57,8 @@ export class ManufacturersComponent implements OnInit {
   }
 
   constructor(private manufacturerService: ManufacturerService, private router: Router,
-    private commonService: CommonService, private tokenStorageService: TokenStorageService) {
+    private commonService: CommonService, private tokenStorageService: TokenStorageService,
+    private notificationService: NotificationService) {
   }
 
   ngOnInit() {
@@ -72,16 +74,16 @@ export class ManufacturersComponent implements OnInit {
   }
 
   loadFormData(): void {
-    //this.myForm.reset();
     this.myForm = new FormGroup({
       manufacturerId: new FormControl(''),
-      manufacturerCompanyName: new FormControl(''),
-      companyEmailAddress: new FormControl(''),
+      manufacturerCompanyName: new FormControl('', [Validators.required]),
+      companyEmailAddress: new FormControl('', [Validators.required, Validators.email]),
       dateOfReg: new FormControl(''),
       regtdAt: new FormControl(''),
-      phoneNumber: new FormControl(''),
-      companyGSTIN: new FormControl(''),
+      phoneNumber: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(12)]),
+      companyGSTIN: new FormControl('', [Validators.required, Validators.min(10)]),
       state: new FormControl('Bihar'),
+
       city: new FormControl(''),
       street: new FormControl(''),
       country: new FormControl('India')
@@ -127,8 +129,26 @@ export class ManufacturersComponent implements OnInit {
   }
 
   onSubmit(form: FormGroup) {
-    this.manufacturerService.createOrSaveData(form);
+    this.manufacturerService.createOrSaveData(form).subscribe({
+      next: (response) => {
+        this.manufacturers = response;
+        if (this.manufacturers != null) {
+          this.notificationService.showSuccess("Manufacturer Record was created Successfully", "Manufacturer Data");
+          this.updateGraphData(this.manufacturers);
+          this.matTable.renderRows();
+          this.myForm.reset();
+        } else {
+          this.notificationService.showError("Record was not created", "Data Issue");
+          return null;
+        }
+      },
+      error: (error) => {
+        this.notificationService.showError(error.error.message, "Data Issue");
+        return null;
+      },
+    });
   }
+
 
   onStateSelect(event: Event) {
     this.commonService.getAllCities(this.myForm.value.state).subscribe((data: City[]) => {

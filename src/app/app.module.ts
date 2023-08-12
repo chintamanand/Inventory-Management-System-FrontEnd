@@ -16,6 +16,7 @@ import {MatTableModule} from '@angular/material/table';
 
 import { AuthInterceptorService } from './services/auth-interceptor.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 const routes: Routes = [
   { path: '', redirectTo: 'authz', pathMatch: 'full' },
@@ -46,7 +47,8 @@ const routes: Routes = [
     HttpClientModule,
     MatTableModule,
     MDBBootstrapModule.forRoot(),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   //providers: [AuthInterceptorService],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}],

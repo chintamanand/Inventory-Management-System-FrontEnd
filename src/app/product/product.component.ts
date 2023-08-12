@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProductCategory } from '../models/productCategory.model';
 import { Products } from '../models/products.model';
 import { CommonService } from '../services/common.service';
 import { ProductService } from '../services/product.service';
 import { TokenStorageService } from '../services/token-storage.service';
+import { MatTable } from '@angular/material/table';
+import { NotificationService } from '../services/notification.service';
 
 @Component({
   selector: 'app-product',
@@ -25,6 +27,8 @@ export class ProductComponent implements OnInit {
   chartLabels: String[] = [];
   chartType = 'pie';
 
+  columnsToDisplay: string[] = ['productId', 'productName', 'productCategory', 'manufacturerName', 'totalWeightOfUnits', 'totalCost', 'totalProductValue', 'productLocation'];
+  @ViewChild('prdctTable') matTable: MatTable<Element>;
   chartDatasets = [
     { data: this.dataPoints2, label: this.dataText1 }
   ];
@@ -41,15 +45,14 @@ export class ProductComponent implements OnInit {
   };
 
   chartClicked(event: any): void {
-    console.log(event);
   }
 
   chartHovered(event: any): void {
-    console.log(event);
   }
 
   constructor(private productService: ProductService, private commonService: CommonService,
-    private tokenStorageService: TokenStorageService, private router: Router) {
+    private tokenStorageService: TokenStorageService, private router: Router,
+    private notificationService: NotificationService) {
   }
 
   ngOnInit() {
@@ -69,9 +72,9 @@ export class ProductComponent implements OnInit {
   loadFormData(): void {
     this.myForm = new FormGroup({
       productId: new FormControl(''),
-      manufacturerId: new FormControl(''),
-      productName: new FormControl(''),
-      productCategory: new FormControl(''),
+      manufacturerId: new FormControl('', [Validators.required]),
+      productName: new FormControl('', [Validators.required]),
+      productCategory: new FormControl('', [Validators.required]),
       noOfUnits: new FormControl(''),
       weightOfUnit: new FormControl(''),
       unitCost: new FormControl(''),
@@ -86,6 +89,7 @@ export class ProductComponent implements OnInit {
     this.productService.getAllProductData().subscribe((data: Products[]) => {
       this.products = data;
       this.updateGraphData(this.products);
+      this.matTable.renderRows();
     });
 
     this.commonService.getProductCategories().subscribe((data: ProductCategory[]) => {
@@ -119,12 +123,27 @@ export class ProductComponent implements OnInit {
     this.chartLabels = Array.from(this.graphData2.keys());
   }
 
-  onSubmit(form: FormGroup): void {
-    this.productService.createOrSaveData(form);
-    // navigate to view after successfully save..
-    // create/get  product category information from  fixed table..
-    // transaction -> two option --  Purchase(Stock Purchase, Payment, Invoice and Email Generation, Daily report) & Sale(Sale of Stock)
+  onSubmit(formData: FormGroup): void {
+    this.productService.createOrSaveData(formData).subscribe({
+      next: (response) => {
+        if (response != null || response != undefined) {
+          this.notificationService.showSuccess("Product Record was created Successfully", "Product Data");
+          this.products = response;
+          this.updateGraphData(this.products);
+          this.matTable.renderRows();
+          this.myForm.reset();
+        } else {
+          this.notificationService.showError("Record was not created", "Data Issue");
+          return null;
+        }
+      },
+      error: (error) => {
+        this.notificationService.showError(error.error.message, "Data Issue");
+        return null;
+      },
+    });
   }
+
 
   exportData(filename: string = 'product_data.xlsx'): void {
     this.commonService.getExport("product").subscribe(
