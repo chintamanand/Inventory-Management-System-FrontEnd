@@ -13,15 +13,16 @@ const headers = {
   providedIn: 'root'
 })
 export class AuthenticationService {
-
   baseUrl: string = environment.baseUrl;
+  authSignIn: string = environment.authSignInPath;
+  authSignUp: string = environment.authSignUpPath;
   roles: string[] = [];
   constructor(private http: HttpClient) {
   }
 
   //User Login
   login(username: string, password: string): Observable<any> {
-    return this.http.post(this.baseUrl + 'auth/signin', { username, password }, headers);
+    return this.http.post(this.baseUrl + this.authSignIn, { username, password }, headers);
   }
 
   //User Registration
@@ -33,7 +34,7 @@ export class AuthenticationService {
     signUpRequest.password = password;
     this.roles.push("admin");
     signUpRequest.role = this.roles;
-    return this.http.post(this.baseUrl + 'auth/signup', signUpRequest, headers);
+    return this.http.post(this.baseUrl + this.authSignUp, signUpRequest, headers);
   }
 
 }

@@ -7,7 +7,6 @@ import { environment } from 'src/environments/environment';
 import { TokenStorageService } from './token-storage.service';
 import { Router } from '@angular/router';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -22,6 +21,8 @@ export class ManufacturerService {
   manufacturers: Observable<Manufacturer[]>;
 
   baseUrl: string = environment.baseUrl;
+  getManfUrl: string = environment.getManfUrl;
+  updManfUrl: string = environment.updManfUrl;
 
   ngOnInit() {
     console.log("Entered Manufacturer's Service ngOnInit() ");
@@ -36,7 +37,7 @@ export class ManufacturerService {
   }
 
   getAllManufacturerData(): Observable<Manufacturer[]> {
-    this.manufacturers = this.httpclient.get<Manufacturer[]>(this.baseUrl + 'manufacturer/get');
+    this.manufacturers = this.httpclient.get<Manufacturer[]>(this.baseUrl + this.getManfUrl);
     return this.manufacturers;
   }
 
@@ -59,7 +60,7 @@ export class ManufacturerService {
     manufactuerData.country = form.value.country;
     manufactuerData.address = form.value.street + ", " + form.value.city + ", " + form.value.state + ", " + "India";
 
-    this.httpclient.post<Manufacturer>(this.baseUrl + 'manufacturer/create-update', manufactuerData)
+    this.httpclient.post<Manufacturer>(this.baseUrl + this.updManfUrl, manufactuerData)
       .subscribe({
         next: (response) => {
           this.manufacturer = response;

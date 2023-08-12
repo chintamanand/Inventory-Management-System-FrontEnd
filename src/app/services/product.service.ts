@@ -11,7 +11,6 @@ import { TokenStorageService } from './token-storage.service';
   providedIn: 'root'
 })
 export class ProductService {
-
   length: number;
 
   constructor(private httpclient: HttpClient, private tokenStorageService: TokenStorageService,
@@ -22,10 +21,11 @@ export class ProductService {
   products: Observable<Products[]>;
 
   baseUrl: string = environment.baseUrl;
+  getPrdUrl: string = environment.getPrdUrl;
+  updPrdUrl: string = environment.updPrdUrl;
 
   ngOnInit() {
     console.log("Entered Product's Service ngOnInit() ");
-
     if (this.tokenStorageService.checkIfUserLoggedIn()) {
       console.log("User Logged In");
     } else {
@@ -36,7 +36,7 @@ export class ProductService {
   }
 
   getAllProductData(): Observable<Products[]> {
-    this.products = this.httpclient.get<Products[]>(this.baseUrl + 'products/get');
+    this.products = this.httpclient.get<Products[]>(this.baseUrl + this.getPrdUrl);
     return this.products;
   }
 
@@ -57,7 +57,7 @@ export class ProductService {
 
     console.log(JSON.stringify(productData));
 
-    this.httpclient.post<Products>(this.baseUrl + 'products/create-update', productData)
+    this.httpclient.post<Products>(this.baseUrl + this.updPrdUrl, productData)
       .subscribe({
         next: (response) => {
           this.product = response;

@@ -13,7 +13,6 @@ import { TokenStorageService } from '../services/token-storage.service';
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit {
-
   dataText1: string = "Product Data";
   myForm: FormGroup;
   products: Products[] = [];
