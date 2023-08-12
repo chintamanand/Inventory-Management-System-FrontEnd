@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Manufacturer } from '../models/manufacturer.model';
 import { ManufacturerService } from '../services/manufacturer.service';
@@ -7,6 +7,7 @@ import { State } from '../models/state.model';
 import { City } from '../models/city.model';
 import { TokenStorageService } from '../services/token-storage.service';
 import { Router } from '@angular/router';
+import { MatTable } from '@angular/material/table';
 
 @Component({
   selector: 'app-manufacturers',
@@ -14,10 +15,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./manufacturers.component.css']
 })
 export class ManufacturersComponent implements OnInit {
-
   dataText1: string = "Manfacturer Data";
   myForm: FormGroup;
   manufacturers: Manufacturer[] = [];
+  columnsToDisplay: string[] = ['manufacturerId', 'manufacturerCompanyName', 'companyEmailAddress', 'phoneNumber', 'address'];
+  @ViewChild('manfTable1') matTable: MatTable<Element>;
+
   states: State[] = [];
   cities: City[] = [];
 
@@ -28,7 +31,6 @@ export class ManufacturersComponent implements OnInit {
   chartLabels: String[] = [];
   chartType = 'pie';
 
-  private roles: string[] = [];
   isLoggedIn = false;
   username?: string;
 
@@ -48,11 +50,9 @@ export class ManufacturersComponent implements OnInit {
   };
 
   chartClicked(event: any): void {
-    console.log(event);
   }
 
   chartHovered(event: any): void {
-    console.log(event);
   }
 
   constructor(private manufacturerService: ManufacturerService, private router: Router,
@@ -60,8 +60,7 @@ export class ManufacturersComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("Entered Manufacturer ngOnInit() ");
-
+    console.log("Entered Manufacturer ngOnInit() method");
     if (this.tokenStorageService.checkIfUserLoggedIn()) {
       this.loadFormData();
       this.loadPageData();
@@ -73,6 +72,7 @@ export class ManufacturersComponent implements OnInit {
   }
 
   loadFormData(): void {
+    //this.myForm.reset();
     this.myForm = new FormGroup({
       manufacturerId: new FormControl(''),
       manufacturerCompanyName: new FormControl(''),
@@ -96,6 +96,7 @@ export class ManufacturersComponent implements OnInit {
     this.manufacturerService.getAllManufacturerData().subscribe((data: Manufacturer[]) => {
       this.manufacturers = data;
       this.updateGraphData(this.manufacturers);
+      this.matTable.renderRows();
     });
   }
 

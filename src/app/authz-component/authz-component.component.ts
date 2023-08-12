@@ -10,7 +10,6 @@ import { TokenStorageService } from '../services/token-storage.service';
   styleUrls: ['./authz-component.component.css']
 })
 export class AuthzComponent implements OnInit {
-  //
   showHead1 = true;
 
   signUpForm: FormGroup;
@@ -52,11 +51,6 @@ export class AuthzComponent implements OnInit {
   }
 
   register(form: FormGroup) {
-    console.log('Valid?', form.valid); // true or false
-    console.log('Name', form.value.username);
-    console.log('Email', form.value.email);
-    console.log('Password', form.value.password);
-
     this.username = form.value.username;
     this.email = form.value.email;
     this.password = form.value.password;
@@ -77,9 +71,6 @@ export class AuthzComponent implements OnInit {
 
   login(form: FormGroup) {
     console.log('Valid?', form.valid); // true or false
-    console.log('Name', form.value.username);
-    console.log('Password', form.value.password);
-
 
     this.username = form.value.username;
     this.password = form.value.password;
