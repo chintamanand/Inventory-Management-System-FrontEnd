@@ -12,11 +12,11 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { ProductComponent } from './product/product.component';
 import { TransactionComponent } from './transaction/transaction.component';
 import { AuthzComponent } from './authz-component/authz-component.component';
-import {MatTableModule} from '@angular/material/table';
 
 import { AuthInterceptorService } from './services/auth-interceptor.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { MatTableModule } from '@angular/material/table';
 
 const routes: Routes = [
   { path: '', redirectTo: 'authz', pathMatch: 'full' },

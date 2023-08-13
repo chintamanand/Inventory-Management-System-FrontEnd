@@ -1,18 +1,9 @@
 <div class="container">
   <div class="row">
     <div class="col">
-
       <br />
       <h3>Manufacturer Data Updation</h3>
       <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)">
-
-        <!--Remove this Field-->
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Id</label>
-          <div class="col-sm-9">
-            <input type="text" formControlName="manufacturerId" placeholder="Manufacturer Id(Optional)">
-          </div>
-        </div>
 
         <div class="form-group row">
           <label class="col-sm-3 col-form-label">Company*</label>
@@ -61,7 +52,7 @@
           <div class="col-sm-9" style="padding-bottom: 5px;">
             <select formControlName="state" (change)="onStateSelect($event)" class="col-sm-1 col-form-label"
               style="width: 41%">
-              <option disabled>Select State</option>
+              <option>Select State</option>
               <option *ngFor="let state of states">{{state.state_name}}</option>
             </select>
           </div>

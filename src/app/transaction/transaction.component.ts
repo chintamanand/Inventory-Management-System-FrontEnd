@@ -10,18 +10,15 @@ import { TransactionService } from '../services/transaction.service';
   styleUrls: ['./transaction.component.css']
 })
 export class TransactionComponent implements OnInit {
-
-  dataText1: string = "Transaction Data";
   transactionForm: FormGroup;
   noOfUnits: number = 1;
   totalCost: number = 1;
 
   constructor(private transactionService: TransactionService, private router: Router,
-              private tokenStorageService: TokenStorageService) { }
+              private tokenStorageService: TokenStorageService) {}
 
   ngOnInit() {
     console.log("Entered Transaction ngOnInit() ");
-
     if (this.tokenStorageService.checkIfUserLoggedIn()) {
       this.loadFormData();
     } else {

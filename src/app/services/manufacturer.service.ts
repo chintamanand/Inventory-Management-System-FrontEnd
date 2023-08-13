@@ -54,7 +54,6 @@ export class ManufacturerService {
 
   createOrSaveData(form: FormGroup): Observable<Manufacturer[]> {
     const manufactuerData: Manufacturer = new Manufacturer();
-    manufactuerData.manufacturerId = form.value.manufacturerId;
     manufactuerData.manufacturerCompanyName = form.value.manufacturerCompanyName;
     manufactuerData.companyEmailAddress = form.value.companyEmailAddress;
     manufactuerData.dateOfReg = form.value.dateOfReg;
@@ -71,11 +70,11 @@ export class ManufacturerService {
       this.commonService.isEmptyOrNull(form.value.companyGSTIN) ||
       this.commonService.isEmptyOrNull(form.value.regtdAt)) {
       this.notificationService.showWarning("Data Issue - companyName/GSTIN/Regd Address", "Form Validation");
-      return this.manufacturers;
+      return new Observable<Manufacturer[]>();
     } else {
       this.manufacturers = this.httpclient.post<Manufacturer[]>(this.baseUrl + this.updManfUrl, manufactuerData);
+      return this.manufacturers;
     }
-    return this.manufacturers;
   }
 
 }

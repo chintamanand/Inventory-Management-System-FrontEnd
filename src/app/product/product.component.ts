@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProductCategory } from '../models/productCategory.model';
 import { Products } from '../models/products.model';
@@ -8,14 +8,13 @@ import { ProductService } from '../services/product.service';
 import { TokenStorageService } from '../services/token-storage.service';
 import { MatTable } from '@angular/material/table';
 import { NotificationService } from '../services/notification.service';
-
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit {
-  dataText1: string = "Product Data";
+  dataText: string = "Product Data";
   myForm: FormGroup;
   products: Products[] = [];
   productCategories: ProductCategory[] = [];
@@ -30,7 +29,7 @@ export class ProductComponent implements OnInit {
   columnsToDisplay: string[] = ['productId', 'productName', 'productCategory', 'manufacturerName', 'totalWeightOfUnits', 'totalCost', 'totalProductValue', 'productLocation'];
   @ViewChild('prdctTable') matTable: MatTable<Element>;
   chartDatasets = [
-    { data: this.dataPoints2, label: this.dataText1 }
+    { data: this.dataPoints2, label: this.dataText}
   ];
 
   chartColors = [
@@ -52,37 +51,31 @@ export class ProductComponent implements OnInit {
 
   constructor(private productService: ProductService, private commonService: CommonService,
     private tokenStorageService: TokenStorageService, private router: Router,
-    private notificationService: NotificationService) {
+    private notificationService: NotificationService, private formBuilder: FormBuilder) {
+    this.myForm = this.formBuilder.group({
+      productId: [null],
+      manufacturerId: [null, [Validators.required]],
+      productName: [null, Validators.required],
+      productCategory: [null, Validators.required],
+      noOfUnits: [null],
+      weightOfUnit: [null],
+      unitCost: [null],
+      landedCost: [null],
+      productReceived: [null],
+      productLocation: [null]
+    });
   }
 
   ngOnInit() {
     console.log("Entered Product ngOnInit() ");
-
     if (this.tokenStorageService.checkIfUserLoggedIn()) {
       console.log("User Logged In");
-      this.loadFormData();
       this.loadPageData();
     } else {
       console.log("User Logged Out");
       this.tokenStorageService.signOut();
       this.router.navigate(['authz'])
     }
-  }
-
-  loadFormData(): void {
-    this.myForm = new FormGroup({
-      productId: new FormControl(''),
-      manufacturerId: new FormControl('', [Validators.required]),
-      productName: new FormControl('', [Validators.required]),
-      productCategory: new FormControl('', [Validators.required]),
-      noOfUnits: new FormControl(''),
-      weightOfUnit: new FormControl(''),
-      unitCost: new FormControl(''),
-      landedCost: new FormControl(''),
-      productReceived: new FormControl(''),
-      productLocation: new FormControl('')
-    });
-
   }
 
   loadPageData(): void {
@@ -118,7 +111,7 @@ export class ProductComponent implements OnInit {
 
     this.dataPoints2 = Array.from(this.graphData2.values());
     this.chartDatasets = [
-      { data: this.dataPoints2, label: this.dataText1 }
+      { data: this.dataPoints2, label: this.dataText }
     ];
     this.chartLabels = Array.from(this.graphData2.keys());
   }
@@ -127,11 +120,11 @@ export class ProductComponent implements OnInit {
     this.productService.createOrSaveData(formData).subscribe({
       next: (response) => {
         if (response != null || response != undefined) {
-          this.notificationService.showSuccess("Product Record was created Successfully", "Product Data");
           this.products = response;
           this.updateGraphData(this.products);
           this.matTable.renderRows();
           this.myForm.reset();
+          this.notificationService.showSuccess("Product Record was created Successfully", "Product Data");
         } else {
           this.notificationService.showError("Record was not created", "Data Issue");
           return null;
