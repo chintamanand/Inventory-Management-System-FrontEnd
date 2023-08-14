@@ -148,8 +148,9 @@
 
         <ng-container matColumnDef="Actions">
           <th mat-header-cell *matHeaderCellDef> Actions</th>
-          <td mat-cell *matCellDef="let element"><mat-icon (click)="productEdit($event, element)">edit</mat-icon>
-            <mat-icon>delete</mat-icon>
+          <td mat-cell *matCellDef="let element">
+            <mat-icon (click)="productEdit($event, element)">edit</mat-icon>
+            <mat-icon (click)="productDelete($event, element)">delete</mat-icon>
           </td>
         </ng-container>
       </table>
@@ -157,10 +158,10 @@
     </div>
   </div>
 
-
   <br />
   <button class="btn btn-primary" (click)="exportData()" [style]="'margin-bottom:15px;'">Export Data</button>
 </div>
 
 <!--Total Inventory Value - 
 Total Capacity Holding Value -->
+

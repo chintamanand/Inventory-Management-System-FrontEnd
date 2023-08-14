@@ -13,8 +13,6 @@ import { NotificationService } from './notification.service';
   providedIn: 'root'
 })
 export class ProductService {
-  length: number;
-
   constructor(private httpclient: HttpClient, private tokenStorageService: TokenStorageService,
     private router: Router, private commonService: CommonService,
     private notificationService: NotificationService) { }
@@ -26,6 +24,7 @@ export class ProductService {
   baseUrl: string = environment.baseUrl;
   getPrdUrl: string = environment.getPrdUrl;
   updPrdUrl: string = environment.updPrdUrl;
+  deletePrdUrl: string = environment.deletePrdUrl;
 
   ngOnInit() {
     console.log("Entered Product's Service ngOnInit() ");
@@ -42,10 +41,8 @@ export class ProductService {
     this.products = this.httpclient.get<Products[]>(this.baseUrl + this.getPrdUrl);
     if (this.products == null || this.products == undefined) {
       this.notificationService.showError("Server Issue - Unable to Load Product Data", "Data Issue");
-      return this.products;
-    } else {
-      return this.products;
     }
+    return this.products;
   }
 
   createOrSaveData(form: FormGroup): Observable<Products[]> {
@@ -69,6 +66,16 @@ export class ProductService {
       return new Observable<Products[]>();
     } else {
       this.products = this.httpclient.post<Products[]>(this.baseUrl + this.updPrdUrl, productData);
+      return this.products;
+    }
+  }
+
+  deleteProductById(productId: number): Observable<Products[]> {
+    if (this.commonService.isEmptyOrNull(productId)) {
+      this.notificationService.showWarning("Data Issue - Invalid Product Id", "Deletion Failure");
+      return new Observable<Products[]>();
+    } else {
+      this.products = this.httpclient.delete<Products[]>(this.baseUrl + this.deletePrdUrl + productId);
       return this.products;
     }
   }

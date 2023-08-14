@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProductCategory } from '../models/productCategory.model';
@@ -9,6 +9,8 @@ import { TokenStorageService } from '../services/token-storage.service';
 import { MatTable } from '@angular/material/table';
 import { NotificationService } from '../services/notification.service';
 import { MatDialog } from '@angular/material/dialog';
+
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
@@ -158,7 +160,6 @@ export class ProductComponent implements OnInit {
   }
 
   productEdit(event: Event, data: Products) {
-    console.log("Clicked Row data is -- " + JSON.stringify(data));
     const dialogRef = this.dialog.open(DialogComponent, {
       data: data,
       width: '600px',
@@ -167,6 +168,33 @@ export class ProductComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe({
       next: (response) => {
+        if (response != null || response != undefined) {
+          this.products = response;
+          this.updateGraphData(this.products);
+          this.matTable.renderRows();
+          this.myForm.reset();
+          this.notificationService.showSuccess("Product Record was created Successfully", "Product Data");
+        } else {
+          this.notificationService.showError("Record was not created", "Data Issue");
+          return null;
+        }
+      },
+      error: (error) => {
+        this.notificationService.showError(error.error.message, "Data Issue");
+        return null;
+      },
+    });
+  }
+
+
+  productDelete(event: Event, data: Products) {
+    console.log("Clicked Row data is -- " + JSON.stringify(data));
+    const dialogRef = this.dialog.open(DeleteDialog, {
+      data: data,
+    });
+
+    dialogRef.afterClosed().subscribe({
+      next: (response: Products[]) => {
         if (response != null || response != undefined) {
           this.products = response;
           this.updateGraphData(this.products);
@@ -180,4 +208,36 @@ export class ProductComponent implements OnInit {
     });
   }
 
+}
+
+@Component({
+  selector: 'delete-dialog',
+  templateUrl: 'deleteDialog.html'
+})
+export class DeleteDialog {
+  constructor(private productService: ProductService, private notificationService: NotificationService,
+    public dialogRef: MatDialogRef<DeleteDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: Products,
+  ) { }
+
+  deleteProduct(event: Event, productId: number) {
+    console.log("Product Id -- " + productId);
+    this.productService.deleteProductById(productId).subscribe({
+      next: (response) => {
+        if (response != null || response != undefined) {
+          this.dialogRef.close(response);
+          this.notificationService.showSuccess("Product Record was deleted Successfully", "Deletion Success");
+        } else {
+          this.notificationService.showError("Record Not Found", "Deletion Issue");
+        }
+      },
+      error: (error) => {
+        this.notificationService.showError(error.error.message, "Deletion Issue");
+      },
+    });
+  }
+
+  onNoClick() {
+    this.dialogRef.close();
+  }
 }

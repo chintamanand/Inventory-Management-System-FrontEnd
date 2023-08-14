@@ -15,16 +15,16 @@ export class DialogComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  
+
   productData: Products;
   constructor(private notificationService: NotificationService,
     public dialogRef: MatDialogRef<DialogComponent>, private productService: ProductService,
     @Inject(MAT_DIALOG_DATA) public data: Products, private formBuilder: FormBuilder) {
     this.myForm = this.formBuilder.group({
-      productId: [{ value: data.productId, disabled: true}, Validators.required],
+      productId: [{ value: data.productId, disabled: true }, Validators.required],
       manufacturerId: data.manufacturerId,
       productName: [data.productName, Validators.required],
-      productCategory: [{ value: data.productCategory, disabled: true}, Validators.required],
+      productCategory: [{ value: data.productCategory, disabled: true }, Validators.required],
       noOfUnits: [data.noOfUnits],
       weightOfUnit: [data.weightOfUnit],
       unitCost: [data.unitCost],
@@ -32,16 +32,15 @@ export class DialogComponent implements OnInit {
       productReceived: [data.productReceived],
       productLocation: [data.productLocation]
     });
-   this.productData=data;
+    this.productData = data;
   }
 
   onSubmit(formData: FormGroup) {
-    formData.value.productId  = this.productData.productId;
+    formData.value.productId = this.productData.productId;
     formData.value.productCategory = this.productData.productCategory;
-    console.log("Form Data is -- " + JSON.stringify(formData.value));
     this.productService.createOrSaveData(formData).subscribe({
       next: (response) => {
-        if (response != null || response != undefined) {          
+        if (response != null || response != undefined) {
           this.myForm.reset();
           this.dialogRef.close(response);
           this.notificationService.showSuccess("Product Record was created Successfully", "Product Data");
@@ -56,6 +55,7 @@ export class DialogComponent implements OnInit {
   }
 
   onNoClick() {
+    this.myForm.reset();
     this.dialogRef.close();
   }
 

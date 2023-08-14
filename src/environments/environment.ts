@@ -11,6 +11,7 @@ export const environment = {
   updManfUrl: 'manufacturer/create-update',
   getPrdUrl: 'products/get',
   updPrdUrl: 'products/create-update',
+  deletePrdUrl: 'products/',
   getStateUrl: 'data/getStates',
   getCitiesUrl: 'data/getCities',
   getCatgUrl: 'data/getCategory',

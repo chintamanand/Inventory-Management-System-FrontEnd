@@ -1,7 +1,7 @@
 <div class="card m-3">
-  <h1 mat-dialog-title class="card-header">{{data.productName}} - Update Info</h1>
-
-  <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)">
+  <h1 mat-dialog-title class="card-header">Update Info</h1>
+  
+  <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)" [style] ="'margin-bottom: 2%;'">
     <div class="form-group row">
       <div class="form-group col" [style]="'margin-left: 3%;'">
         <label class="col-sm-3 col-form-label">Product Id</label>
@@ -82,5 +82,5 @@
 
 </div>
 <div>
-  <button mat-button (click)="onNoClick()">Close</button>
+  <button class="btn" mat-button (click)="onNoClick()">Close</button>
 </div>
