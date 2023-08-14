@@ -49,7 +49,7 @@ export class ProductService {
   }
 
   createOrSaveData(form: FormGroup): Observable<Products[]> {
-    const productData: Products = new Products();
+    let productData: Products = new Products();
     productData.productId = form.value.productId;
     productData.manufacturerId = form.value.manufacturerId;
     productData.productName = form.value.productName;

@@ -1,0 +1,11 @@
+.form-group row{
+  margin-left:10px;
+}
+
+.col-form-label{
+  width: 100%;
+}
+
+.form-group col{
+  margin-left: 3%!important;
+}

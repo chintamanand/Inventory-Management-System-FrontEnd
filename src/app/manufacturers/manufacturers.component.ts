@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Manufacturer } from '../models/manufacturer.model';
 import { ManufacturerService } from '../services/manufacturer.service';
 import { CommonService } from '../services/common.service';

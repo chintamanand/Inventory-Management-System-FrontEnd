@@ -53,7 +53,7 @@ export class ManufacturerService {
   }
 
   createOrSaveData(form: FormGroup): Observable<Manufacturer[]> {
-    const manufactuerData: Manufacturer = new Manufacturer();
+    let manufactuerData: Manufacturer = new Manufacturer();
     manufactuerData.manufacturerCompanyName = form.value.manufacturerCompanyName;
     manufactuerData.companyEmailAddress = form.value.companyEmailAddress;
     manufactuerData.dateOfReg = form.value.dateOfReg;

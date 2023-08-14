@@ -17,6 +17,12 @@ import { AuthInterceptorService } from './services/auth-interceptor.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatIconModule } from '@angular/material/icon';
+import {MatDialogModule} from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { DialogComponent } from './dialog/dialog.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'authz', pathMatch: 'full' },
@@ -36,7 +42,8 @@ const routes: Routes = [
     ManufacturersComponent,
     ProductComponent,
     TransactionComponent,
-    AuthzComponent
+    AuthzComponent,
+    DialogComponent
   ],
   imports: [
     //Modulues or libraries which are used in project
@@ -48,10 +55,16 @@ const routes: Routes = [
     MatTableModule,
     MDBBootstrapModule.forRoot(),
     BrowserAnimationsModule,
+    MatPaginatorModule,
+    MatIconModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatDialogModule,
     ToastrModule.forRoot()
   ],
   //providers: [AuthInterceptorService],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
   //below component will be considered as homeComponent
   bootstrap: [AppComponent]
 })

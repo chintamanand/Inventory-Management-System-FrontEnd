@@ -1,0 +1,86 @@
+<div class="card m-3">
+  <h1 mat-dialog-title class="card-header">{{data.productName}} - Update Info</h1>
+
+  <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)">
+    <div class="form-group row">
+      <div class="form-group col" [style]="'margin-left: 3%;'">
+        <label class="col-sm-3 col-form-label">Product Id</label>
+        <div class="col-sm-9">
+          <input type="text" formControlName="productId" placeholder="Enter Product Id">
+        </div>
+      </div>
+      <div class="form-group col">
+        <label class="col-sm-3 col-form-label">Manufacturer Id*</label>
+        <div class="col-sm-9">
+          <input type="text" formControlName="manufacturerId" placeholder="Enter Manufacturer Id">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="form-group col" [style]="'margin-left: 3%;'">
+        <label class="col-sm-3 col-form-label">Product Name*</label>
+        <div class="col-sm-9">
+          <input type="text" formControlName="productName" placeholder="Enter Product Name">
+        </div>
+      </div>
+      <div class="form-group col">
+        <label class="col-sm-3 col-form-label">Category*</label>
+        <div class="col-sm-9">
+          <input type="text" formControlName="productCategory" placeholder="Enter Product Category">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="form-group col" [style]="'margin-left: 3%;'">
+        <label class="col-sm-3 col-form-label">Weight Of Each Unit</label>
+        <div class="col-sm-9">
+          <input type="text" formControlName="weightOfUnit" placeholder="Enter Weight Of Unit(g)">
+        </div>
+      </div>
+      <div class="form-group col">
+        <label class="col-sm-3 col-form-label">No Of Units</label>
+        <div class="col-sm-9">
+          <input type="text" formControlName="noOfUnits" placeholder="Enter No Of Units">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="form-group col" [style]="'margin-left: 3%;'">
+        <label class="col-sm-3 col-form-label">Unit Cost</label>
+        <div class="col-sm-9">
+          <input type="text" formControlName="unitCost" placeholder="Unit Cost(₹)">
+        </div>
+      </div>
+      <div class="form-group col">
+        <label class="col-sm-3 col-form-label">Landed Cost</label>
+        <div class="col-sm-9">
+          <input type="text" formControlName="landedCost" placeholder="Import/Shipping Cost(₹)">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="form-group col" [style]="'margin-left: 3%;'">
+        <label class="col-sm-3 col-form-label">Product Received</label>
+        <div class="col-sm-9">
+          <input type="date" formControlName="productReceived">
+        </div>
+      </div>
+      <div class="form-group col">
+        <label class="col-sm-3 col-form-label">Product Location</label>
+        <div class="col-sm-9">
+          <input type="text" formControlName="productLocation">
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn-primary" type="submit" [style]="'margin-left: 40%;'">Edit</button>
+  </form>
+
+</div>
+<div>
+  <button mat-button (click)="onNoClick()">Close</button>
+</div>

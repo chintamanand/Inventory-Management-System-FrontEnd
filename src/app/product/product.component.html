@@ -133,7 +133,7 @@
 
         <ng-container matColumnDef="totalCost">
           <th mat-header-cell *matHeaderCellDef> Indiv Cost(₹) </th>
-          <td mat-cell *matCellDef="let element">₹ {{element.totalCost}}</td>
+          <td mat-cell *matCellDef="let element">₹ {{element.totalCost  | number:'1.1-2' }}</td>
         </ng-container>
 
         <ng-container matColumnDef="totalProductValue">
@@ -144,6 +144,13 @@
         <ng-container matColumnDef="productLocation">
           <th mat-header-cell *matHeaderCellDef> Location </th>
           <td mat-cell *matCellDef="let element"> {{element.productLocation}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Actions">
+          <th mat-header-cell *matHeaderCellDef> Actions</th>
+          <td mat-cell *matCellDef="let element"><mat-icon (click)="productEdit($event, element)">edit</mat-icon>
+            <mat-icon>delete</mat-icon>
+          </td>
         </ng-container>
       </table>
 

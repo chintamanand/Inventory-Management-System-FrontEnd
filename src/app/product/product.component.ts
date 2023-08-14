@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProductCategory } from '../models/productCategory.model';
 import { Products } from '../models/products.model';
@@ -8,6 +8,9 @@ import { ProductService } from '../services/product.service';
 import { TokenStorageService } from '../services/token-storage.service';
 import { MatTable } from '@angular/material/table';
 import { NotificationService } from '../services/notification.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../dialog/dialog.component';
+
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
@@ -26,10 +29,10 @@ export class ProductComponent implements OnInit {
   chartLabels: String[] = [];
   chartType = 'pie';
 
-  columnsToDisplay: string[] = ['productId', 'productName', 'productCategory', 'manufacturerName', 'totalWeightOfUnits', 'totalCost', 'totalProductValue', 'productLocation'];
+  columnsToDisplay: string[] = ['productId', 'productName', 'productCategory', 'manufacturerName', 'totalWeightOfUnits', 'totalCost', 'totalProductValue', 'productLocation', 'Actions'];
   @ViewChild('prdctTable') matTable: MatTable<Element>;
   chartDatasets = [
-    { data: this.dataPoints2, label: this.dataText}
+    { data: this.dataPoints2, label: this.dataText }
   ];
 
   chartColors = [
@@ -51,7 +54,8 @@ export class ProductComponent implements OnInit {
 
   constructor(private productService: ProductService, private commonService: CommonService,
     private tokenStorageService: TokenStorageService, private router: Router,
-    private notificationService: NotificationService, private formBuilder: FormBuilder) {
+    private notificationService: NotificationService, private formBuilder: FormBuilder,
+    public dialog: MatDialog) {
     this.myForm = this.formBuilder.group({
       productId: [null],
       manufacturerId: [null, [Validators.required]],
@@ -116,7 +120,7 @@ export class ProductComponent implements OnInit {
     this.chartLabels = Array.from(this.graphData2.keys());
   }
 
-  onSubmit(formData: FormGroup): void {
+  onSubmit(formData: FormGroup) {
     this.productService.createOrSaveData(formData).subscribe({
       next: (response) => {
         if (response != null || response != undefined) {
@@ -137,7 +141,6 @@ export class ProductComponent implements OnInit {
     });
   }
 
-
   exportData(filename: string = 'product_data.xlsx'): void {
     this.commonService.getExport("product").subscribe(
       (response: any) => {
@@ -152,6 +155,29 @@ export class ProductComponent implements OnInit {
         downloadLink.click();
       }
     )
+  }
+
+  productEdit(event: Event, data: Products) {
+    console.log("Clicked Row data is -- " + JSON.stringify(data));
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: data,
+      width: '600px',
+      height: '400px'
+    });
+
+    dialogRef.afterClosed().subscribe({
+      next: (response) => {
+        if (response != null || response != undefined) {
+          this.products = response;
+          this.updateGraphData(this.products);
+          this.matTable.renderRows();
+        }
+      },
+      error: (error) => {
+        this.notificationService.showError(error.error.message, "Update Failure");
+        return null;
+      },
+    });
   }
 
 }
