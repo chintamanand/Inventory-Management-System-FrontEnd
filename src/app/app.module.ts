@@ -25,10 +25,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { DialogComponent } from './dialog/dialog.component';
 import { MatCardModule } from '@angular/material/card';
+import { HeaderComponent } from './header/header.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'authz', pathMatch: 'full' },
-  { path: 'home1', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'home', redirectTo: 'home', pathMatch: 'full' },
   { path: 'app', component: AppComponent },
   { path: 'home', component: HomeComponent },
   { path: 'manufactuers', component: ManufacturersComponent },
@@ -46,7 +47,8 @@ const routes: Routes = [
     ProductComponent,
     TransactionComponent,
     AuthzComponent,
-    DialogComponent
+    DialogComponent,
+    HeaderComponent
   ],
   imports: [
     //Modulues or libraries which are used in project
