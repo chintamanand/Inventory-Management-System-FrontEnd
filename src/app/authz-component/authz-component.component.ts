@@ -94,7 +94,7 @@ export class AuthzComponent implements OnInit {
           this.isLoggedIn = true;
           this.roles = this.tokenStorage.getUser().roles;
           this.router.navigate(['home'])
-          this.notificationService.showSuccess(data.message +" Click on Home icon", "Login Success");
+          this.notificationService.showSuccess(data.message, "Login Success");
         },
         err => {
           this.isLoginFailed = true;
