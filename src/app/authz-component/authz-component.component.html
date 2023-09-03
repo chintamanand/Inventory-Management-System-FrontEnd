@@ -1,62 +1,41 @@
+<HTML>
 
 <body>
+	<div class="container" id="container">
+		<div class="form-container sign-up-container">
+			<form [formGroup]="signUpForm" (ngSubmit)="register(signUpForm)">
+				<h1>Create Account</h1>
+				<input type="text" placeholder="UserName" formControlName="username" name="username" />
+				<input type="email" placeholder="Email" formControlName="email" name="email" />
+				<input type="password" placeholder="Password" formControlName="password" name="password" />
+				<button type="submit">Sign Up</button>
+			</form>
+		</div>
+		<div class="form-container sign-in-container">
+			<form [formGroup]="signInForm" (ngSubmit)="login(signInForm)">
+				<h1>Sign In</h1>
+				<input type="text" placeholder="UserName" formControlName="username" name="username" />
+				<input type="password" placeholder="Password" formControlName="password" name="password" />
+				<a (click)="forgotPassword()">Forgot your password?</a>
+				<button type="submit">Sign In</button>
+			</form>
 
-	<!-- <header *ngIf="showHead1">
-
-		<nav class="navbar navbar-expand-lg navbar-dark navbar-header-color static-top">
-		  <div class="container">
-			<a class="navbar-brand" href="/home">
-			  <img src="assets/images/SampleImage-2.jpg" alt="Unable to display Logo" height="36">
-			</a>
-			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-			  <span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			  <ul class="navbar-nav ms-auto">
-				<li class="nav-item">
-				  <a class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" 
-					[routerLink]="['/authz']">Login</a>
-				</li>
-			  </ul>
-			</div>
-		  </div>
-		</nav>
-		
-		</header> -->
-
-
-<div class="container" id="container">
-	<div class="form-container sign-up-container">
-		<form [formGroup]="signUpForm" (ngSubmit)="register(signUpForm)">
-			<h1>Create Account</h1>
-			<input type="text" placeholder="UserName" formControlName="username" name="username"/>
-			<input type="email" placeholder="Email" formControlName="email" name="email"/>
-			<input type="password" placeholder="Password" formControlName="password" name="password"/>
-			<button type="submit">Sign Up</button>
-		</form>
-	</div>
-	<div class="form-container sign-in-container">
-		<form [formGroup]="signInForm" (ngSubmit)="login(signInForm)">
-			<h1>Sign In</h1>
-			<input type="text" placeholder="UserName" formControlName="username" name="username" />
-			<input type="password" placeholder="Password" formControlName="password" name="password"/>
-			<a (click) ="forgotPassword()">Forgot your password?</a>
-			<button type="submit">Sign In</button>
-		</form>
-
-	</div>
-	<div class="overlay-container">
-		<div class="overlay">
-			<div class="overlay-panel overlay-left">
-				<h1>Welcome Back!</h1>
-				<p>To keep connected with us please login with your personal info</p>
-				<button type ="button" class="signIn" id="signIn" (click)="signIn()">Sign In</button>
-			</div>
-			<div class="overlay-panel overlay-right">
-				<h1>Hello, Friend!</h1>
-				<p>Enter your personal details and start journey with us</p>
-				<button type ="button" class="signUp" id="signUp" (click)="signUp()">Sign Up</button>
+		</div>
+		<div class="overlay-container">
+			<div class="overlay">
+				<div class="overlay-panel overlay-left">
+					<h1>Welcome Back!</h1>
+					<p>To keep connected with us please login with your personal info</p>
+					<button type="button" class="signIn" id="signIn" (click)="signIn()">Sign In</button>
+				</div>
+				<div class="overlay-panel overlay-right">
+					<h1>Hello, Friend!</h1>
+					<p>Enter your personal details and start journey with us</p>
+					<button type="button" class="signUp" id="signUp" (click)="signUp()">Sign Up</button>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
+</body>
+
+</HTML>

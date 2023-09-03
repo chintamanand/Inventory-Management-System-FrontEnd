@@ -14,7 +14,7 @@ export class AppComponent {
   showHead1: boolean = false;
 
   constructor(router: Router, private tokenStorageService: TokenStorageService) {
-    if(tokenStorageService.checkIfUserLoggedIn()){
+    if (tokenStorageService.checkIfUserLoggedIn()) {
       console.log("User LoggedIn");
 
       router.events.forEach((event) => {
@@ -39,29 +39,11 @@ export class AppComponent {
       });
 
     }
-    // else {
-    //   this.tokenStorageService.signOut();
-    //   this.router.navigate(['authz'])
-    // }
+  }
 
-    // on route change to '/login', set the variable showHead to false
-      // router.events.forEach((event) => {
-      //   if (event instanceof NavigationStart) {
-      //     if (event['url'] == '/authz') {
-      //       this.showHead = false;
-      //     } else {
-      //       // console.log("NU")
-      //       this.showHead = true;
-      //     }
-      //   }
-      // });
-
-
-    }
-
-    logout(): void {
-      this.tokenStorageService.signOut();
-      window.location.reload();
-    }
+  logout(): void {
+    this.tokenStorageService.signOut();
+    window.location.reload();
+  }
 
 }

@@ -130,7 +130,7 @@ export class ProductComponent implements OnInit {
           this.updateGraphData(this.products);
           this.matTable.renderRows();
           this.myForm.reset();
-          this.notificationService.showSuccess("Product Record was created Successfully", "Product Data");
+          this.notificationService.showSuccess("Product Record was created successfully", "Product Data");
         } else {
           this.notificationService.showError("Record was not created", "Data Issue");
           return null;
@@ -173,9 +173,9 @@ export class ProductComponent implements OnInit {
           this.updateGraphData(this.products);
           this.matTable.renderRows();
           this.myForm.reset();
-          this.notificationService.showSuccess("Product Record was created Successfully", "Product Data");
+          this.notificationService.showSuccess("Product was updated Successfully", "Product Data");
         } else {
-          this.notificationService.showError("Record was not created", "Data Issue");
+          //this.notificationService.showError("Record was not created", "Data Issue");
           return null;
         }
       },

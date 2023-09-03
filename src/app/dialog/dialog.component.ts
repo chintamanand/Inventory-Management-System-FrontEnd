@@ -43,7 +43,6 @@ export class DialogComponent implements OnInit {
         if (response != null || response != undefined) {
           this.myForm.reset();
           this.dialogRef.close(response);
-          this.notificationService.showSuccess("Product Record was created Successfully", "Product Data");
         } else {
           this.notificationService.showError("Record was not created", "Data Issue");
         }

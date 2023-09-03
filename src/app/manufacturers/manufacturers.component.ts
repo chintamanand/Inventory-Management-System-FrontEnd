@@ -74,7 +74,6 @@ export class ManufacturersComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("Entered Manufacturer ngOnInit() method");
     if (this.tokenStorageService.checkIfUserLoggedIn()) {
       this.loadPageData();
     } else {

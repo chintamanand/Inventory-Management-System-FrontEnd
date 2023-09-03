@@ -1,0 +1,49 @@
+<div>
+    <h5>Dashboard</h5>
+    <mat-grid-list cols="4" rowHeight="50%">
+        <mat-grid-tile>
+            <mat-card class="my-card">
+                <mat-card-title [style]="'font-weight:100;font-size: 20px;'">
+                    Total Manufacturer Count
+                </mat-card-title>
+                <mat-card-content>
+                    <span [style]="'padding-left:50%;'">{{data.totalManufacturerCount}}</span>
+                </mat-card-content>
+            </mat-card>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+            <mat-card>
+                <mat-card-title [style]="'font-weight:100;font-size: 20px;'">
+                    Total Product Count
+                </mat-card-title>
+                <mat-card-content>
+                    <span [style]="'padding-left:50%;'">{{data.totalProductCount}}</span>
+                </mat-card-content>
+            </mat-card>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+            <mat-card>
+                <mat-card-title [style]="'font-weight:100;font-size: 20px;'">
+                    Manufacturers Added recently
+                </mat-card-title>
+                <mat-card-content>
+                    <span [style]="'padding-left:50%;'"> {{data.noOfManufacturersRecAdded}}</span>
+                </mat-card-content>
+            </mat-card>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+            <mat-card>
+                <mat-card-title [style]="'font-weight:100;font-size: 20px;'">
+                    Products Added recently
+                </mat-card-title>
+                <mat-card-content>
+                    <span [style]="'padding-left:50%;'">{{data.noOfProductsRecAdded}}</span>
+                </mat-card-content>
+            </mat-card>
+        </mat-grid-tile>
+
+    </mat-grid-list>
+</div>

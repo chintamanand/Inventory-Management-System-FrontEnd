@@ -133,7 +133,7 @@
 
         <ng-container matColumnDef="totalCost">
           <th mat-header-cell *matHeaderCellDef> Indiv Cost(₹) </th>
-          <td mat-cell *matCellDef="let element">₹ {{element.totalCost  | number:'1.1-2' }}</td>
+          <td mat-cell *matCellDef="let element">₹ {{element.totalCost | number:'1.1-2' }}</td>
         </ng-container>
 
         <ng-container matColumnDef="totalProductValue">
@@ -162,6 +162,4 @@
   <button class="btn btn-primary" (click)="exportData()" [style]="'margin-bottom:15px;'">Export Data</button>
 </div>
 
-<!--Total Inventory Value - 
-Total Capacity Holding Value -->
-
+<!--Total Inventory Value & Total Capacity Holding Value need to be added into the homePage -->

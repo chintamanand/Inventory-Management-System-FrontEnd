@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { environment } from 'src/environments/environment';
 import { ProductCategory } from '../models/productCategory.model';
 import { NotificationService } from './notification.service';
-import { catchError, retry  } from 'rxjs/operators';
+import { OverviewResponse } from '../models/OverviewResponse.model';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +28,7 @@ export class CommonService {
   getCitiesUrl: string = environment.getCitiesUrl;
   getCatgUrl: string = environment.getCatgUrl;
   genXcelUrl: string = environment.genXcelUrl;
+  getOverviewUrl: string = environment.getOverviewUrl;
 
   getAllStates(countryName: string): Observable<State[]> {
     this.states = this.httpclient.get<State[]>(this.baseUrl + this.getStateUrl + '?countryName=' + countryName);
@@ -59,6 +60,10 @@ export class CommonService {
     } else {
       return false;
     }
+  }
+
+  getOverviewData(): Observable<OverviewResponse> {
+    return this.httpclient.get<OverviewResponse>(this.baseUrl + this.getOverviewUrl);
   }
 
 }

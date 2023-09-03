@@ -15,7 +15,8 @@ export const environment = {
   getStateUrl: 'data/getStates',
   getCitiesUrl: 'data/getCities',
   getCatgUrl: 'data/getCategory',
-  genXcelUrl: 'data/generateXcel/'
+  genXcelUrl: 'data/generateXcel/',
+  getOverviewUrl: 'data/getOverview',
 };
 
 /*

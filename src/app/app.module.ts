@@ -6,12 +6,13 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponentComponent } from './home-component/home-component.component';
+import { HomeComponent } from './home-component/home-component.component';
 import { ManufacturersComponent } from './manufacturers/manufacturers.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { ProductComponent } from './product/product.component';
 import { TransactionComponent } from './transaction/transaction.component';
 import { AuthzComponent } from './authz-component/authz-component.component';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 import { AuthInterceptorService } from './services/auth-interceptor.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -19,15 +20,17 @@ import { ToastrModule } from 'ngx-toastr';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { DialogComponent } from './dialog/dialog.component';
+import { MatCardModule } from '@angular/material/card';
 
 const routes: Routes = [
   { path: '', redirectTo: 'authz', pathMatch: 'full' },
-  { path: 'home1', redirectTo: 'home', pathMatch: 'full'},
-  { path: 'home', component: HomeComponentComponent },
+  { path: 'home1', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'app', component: AppComponent },
+  { path: 'home', component: HomeComponent },
   { path: 'manufactuers', component: ManufacturersComponent },
   { path: 'products', component: ProductComponent },
   { path: 'transactions', component: TransactionComponent },
@@ -38,7 +41,7 @@ const routes: Routes = [
   //component available for usage.
   declarations: [
     AppComponent,
-    HomeComponentComponent,
+    HomeComponent,
     ManufacturersComponent,
     ProductComponent,
     TransactionComponent,
@@ -55,12 +58,12 @@ const routes: Routes = [
     MatTableModule,
     MDBBootstrapModule.forRoot(),
     BrowserAnimationsModule,
-    MatPaginatorModule,
+    MatPaginatorModule, MatCardModule,
     MatIconModule,
     MatDialogModule,
     MatButtonModule,
     MatFormFieldModule,
-    MatDialogModule,
+    MatDialogModule, MatGridListModule,
     ToastrModule.forRoot()
   ],
   //providers: [AuthInterceptorService],

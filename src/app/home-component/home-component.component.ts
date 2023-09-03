@@ -1,15 +1,23 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonService } from '../services/common.service';
+import { OverviewResponse } from '../models/OverviewResponse.model';
 
 @Component({
-  selector: 'app-home-component',
-  templateUrl: './home-component.component.html',
-  styleUrls: ['./home-component.component.css']
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
 })
-export class HomeComponentComponent implements OnInit {
+export class HomeComponent implements OnInit {
 
-  constructor() { }
+  data: OverviewResponse = new OverviewResponse();
+  constructor(private commonService: CommonService) {
+  }
 
   ngOnInit(): void {
+    this.commonService.getOverviewData().subscribe((data1: OverviewResponse) => {
+      console.log("Overview Data received is -- " + JSON.stringify(data1));
+      this.data = data1;
+    });
   }
 
 }
