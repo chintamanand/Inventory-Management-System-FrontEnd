@@ -11,7 +11,7 @@ import { NotificationService } from '../services/notification.service';
 import { MatDialog } from '@angular/material/dialog';
 
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { DialogComponent } from '../dialog/dialog.component';
+import { ProductEditDialogComponent } from '../product-edit-dialog/ProductEditDialog.component';
 
 @Component({
   selector: 'app-product',
@@ -160,7 +160,7 @@ export class ProductComponent implements OnInit {
   }
 
   productEdit(event: Event, data: Products) {
-    const dialogRef = this.dialog.open(DialogComponent, {
+    const dialogRef = this.dialog.open(ProductEditDialogComponent, {
       data: data,
       width: '600px',
       height: '400px'

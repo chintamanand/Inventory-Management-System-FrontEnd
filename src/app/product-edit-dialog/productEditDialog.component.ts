@@ -6,11 +6,11 @@ import { ProductService } from '../services/product.service';
 import { NotificationService } from '../services/notification.service';
 
 @Component({
-  selector: 'app-dialog',
-  templateUrl: './dialog.component.html',
-  styleUrls: ['./dialog.component.css']
+  selector: 'product-edit-dialog',
+  templateUrl: './product-edit-dialog.component.html',
+  styleUrls: ['./product-edit-dialog.component.css']
 })
-export class DialogComponent implements OnInit {
+export class ProductEditDialogComponent implements OnInit {
   myForm: FormGroup;
 
   ngOnInit(): void {
@@ -18,7 +18,7 @@ export class DialogComponent implements OnInit {
 
   productData: Products;
   constructor(private notificationService: NotificationService,
-    public dialogRef: MatDialogRef<DialogComponent>, private productService: ProductService,
+    public dialogRef: MatDialogRef<ProductEditDialogComponent>, private productService: ProductService,
     @Inject(MAT_DIALOG_DATA) public data: Products, private formBuilder: FormBuilder) {
     this.myForm = this.formBuilder.group({
       productId: [{ value: data.productId, disabled: true }, Validators.required],

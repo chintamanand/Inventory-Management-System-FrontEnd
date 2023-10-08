@@ -23,7 +23,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { DialogComponent } from './dialog/dialog.component';
+import { ProductEditDialogComponent } from './product-edit-dialog/ProductEditDialog.component';
 import { MatCardModule } from '@angular/material/card';
 import { HeaderComponent } from './header/header.component';
 
@@ -47,7 +47,7 @@ const routes: Routes = [
     ProductComponent,
     TransactionComponent,
     AuthzComponent,
-    DialogComponent,
+    ProductEditDialogComponent,
     HeaderComponent
   ],
   imports: [
