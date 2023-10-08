@@ -9,6 +9,8 @@ import { TokenStorageService } from '../services/token-storage.service';
 import { Router } from '@angular/router';
 import { MatTable } from '@angular/material/table';
 import { NotificationService } from '../services/notification.service';
+import { ManufactureViewDialogComponent } from '../manufacturer-view-dialog/manufacturer-view-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-manufacturers',
@@ -59,7 +61,8 @@ export class ManufacturersComponent implements OnInit {
 
   constructor(private manufacturerService: ManufacturerService, private router: Router,
     private commonService: CommonService, private tokenStorageService: TokenStorageService,
-    private notificationService: NotificationService, private formBuilder: FormBuilder) {
+    private notificationService: NotificationService, private formBuilder: FormBuilder,
+    public dialog: MatDialog) {
       this.myForm =  this.formBuilder.group({
         manufacturerCompanyName: [null],
         companyEmailAddress: [null, [Validators.required, Validators.email]],
@@ -182,8 +185,31 @@ export class ManufacturersComponent implements OnInit {
     window.location.reload();
   }
 
-  manufacturerView(event: Event, data: Manufacturer): void{
-    console.log("Clicked Row data is -- " + JSON.stringify(data));
+  manufacturerView(event: Event, data: Manufacturer): void {
+    console.log("Manufacturer View Clicked" + JSON.stringify(data));
+    const dialogRef = this.dialog.open(ManufactureViewDialogComponent, {
+      data: data,
+      width: '400px',
+      height: '350px'
+    });
+
+    dialogRef.afterClosed().subscribe({
+      next: (response) => {
+        if (response != null || response != undefined) {
+          // this.manufacturers = response;
+          // this.updateGraphData(this.manufacturers);
+          // this.matTable.renderRows();
+          // this.myForm.reset();
+          //this.notificationService.showSuccess("Manufacturer was updated Successfully", "Product Data");
+        } else {
+          return null;
+        }
+      },
+      error: (error) => {
+        this.notificationService.showError(error.error.message, "Data Issue");
+        return null;
+      },
+    });
   }
 
 }

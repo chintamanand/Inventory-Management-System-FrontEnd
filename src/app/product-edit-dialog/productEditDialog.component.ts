@@ -53,7 +53,7 @@ export class ProductEditDialogComponent implements OnInit {
     });
   }
 
-  onNoClick() {
+  closeDialog() {
     this.myForm.reset();
     this.dialogRef.close();
   }

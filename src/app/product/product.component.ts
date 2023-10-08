@@ -11,7 +11,7 @@ import { NotificationService } from '../services/notification.service';
 import { MatDialog } from '@angular/material/dialog';
 
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ProductEditDialogComponent } from '../product-edit-dialog/ProductEditDialog.component';
+import { ProductEditDialogComponent } from '../product-edit-dialog/productEditDialog.component';
 
 @Component({
   selector: 'app-product',
@@ -237,7 +237,7 @@ export class DeleteDialog {
     });
   }
 
-  onNoClick() {
+  closeDialog() {
     this.dialogRef.close();
   }
 }

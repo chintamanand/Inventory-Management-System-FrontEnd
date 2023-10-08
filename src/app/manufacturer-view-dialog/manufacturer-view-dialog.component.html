@@ -1,0 +1,17 @@
+<div class="container">
+    <div class="image">
+        <img src="./assets/images/img-01.png" alt="Image Alternate Text" width="50%" height="50%">
+    </div>
+    <div class="content">
+        <p><span font-weight="600">Manufacturer Id: </span>{{data.manufacturerId}}</p>
+        <p><span font-weight="600">Company Name: </span>{{data.manufacturerCompanyName}}</p>
+        <p><span font-weight="600">Company Email Address: </span>{{data.companyEmailAddress}}</p>
+        <p><span font-weight="600">Company GSTIN: </span>{{data.companyGSTIN}}</p>
+        <p><span font-weight="600">Phone Number: </span>{{data.phoneNumber}}</p>
+        <p><span font-weight="600">Country: </span>{{data.country}}</p>
+    </div>
+</div>
+
+<div>
+    <button mat-button color="primary" (click)="closeDialog()">Close</button>
+</div>

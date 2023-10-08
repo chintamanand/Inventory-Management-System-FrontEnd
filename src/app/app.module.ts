@@ -23,9 +23,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { ProductEditDialogComponent } from './product-edit-dialog/ProductEditDialog.component';
+import { ProductEditDialogComponent } from './product-edit-dialog/productEditDialog.component';
 import { MatCardModule } from '@angular/material/card';
 import { HeaderComponent } from './header/header.component';
+import { ManufactureViewDialogComponent } from './manufacturer-view-dialog/manufacturer-view-dialog.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'authz', pathMatch: 'full' },
@@ -48,7 +49,8 @@ const routes: Routes = [
     TransactionComponent,
     AuthzComponent,
     ProductEditDialogComponent,
-    HeaderComponent
+    HeaderComponent,
+    ManufactureViewDialogComponent
   ],
   imports: [
     //Modulues or libraries which are used in project
