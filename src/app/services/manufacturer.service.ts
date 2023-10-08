@@ -22,7 +22,6 @@ export class ManufacturerService {
   manufacturer: Manufacturer = new Manufacturer();
 
   manufacturers: Observable<Manufacturer[]>;
-  
   baseUrl: string = environment.baseUrl;
   getManfUrl: string = environment.getManfUrl;
   updManfUrl: string = environment.updManfUrl;
@@ -48,11 +47,7 @@ export class ManufacturerService {
     }
   }
 
-  createAuthorizationHeader(headers: HttpHeaders) {
-    headers.append("Authorization", "Bearer " + this.tokenStorageService.getToken());
-  }
-
-  createOrSaveData(form: FormGroup): Observable<Manufacturer[]> {
+  createOrSaveData(form: FormGroup, file: File): Observable<Manufacturer[]> {
     let manufactuerData: Manufacturer = new Manufacturer();
     manufactuerData.manufacturerCompanyName = form.value.manufacturerCompanyName;
     manufactuerData.companyEmailAddress = form.value.companyEmailAddress;
@@ -72,7 +67,14 @@ export class ManufacturerService {
       this.notificationService.showWarning("Data Issue - companyName/GSTIN/Regd Address", "Form Validation");
       return new Observable<Manufacturer[]>();
     } else {
-      this.manufacturers = this.httpclient.post<Manufacturer[]>(this.baseUrl + this.updManfUrl, manufactuerData);
+      let formData: FormData = new FormData();
+      formData.append('file', file);
+      formData.append('manufacturerDto', JSON.stringify(manufactuerData));
+      let headers = new HttpHeaders();
+      headers.append('Content-Type', 'multipart/form-data');
+      headers.append('Accept', 'application/json');
+      this.manufacturers = this.httpclient.post<Manufacturer[]>(this.baseUrl + this.updManfUrl,
+        formData, { headers: headers });
       return this.manufacturers;
     }
   }

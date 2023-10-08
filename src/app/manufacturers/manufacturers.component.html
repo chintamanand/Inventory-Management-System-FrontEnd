@@ -2,56 +2,63 @@
   <div class="row">
     <div class="col">
       <br />
-      <h3>Manufacturer Data Updation</h3>
-      <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)">
+      <h3>Manufacturer Data</h3>
+      <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)" enctype="multipart/form-data">
 
         <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Company*</label>
-          <div class="col-sm-9">
+          <label class="col-sm-3 col-form-label" [style]="'width: 30%;'">Company*</label>
+          <div class="col-sm-7">
             <input type="text" formControlName="manufacturerCompanyName" placeholder="Enter Company Name">
           </div>
         </div>
 
         <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Email*</label>
-          <div class="col-sm-9">
+          <label class="col-sm-3 col-form-label" [style]="'width: 30%;'">Email*</label>
+          <div class="col-sm-7">
             <input type="text" formControlName="companyEmailAddress" placeholder="Enter Email">
           </div>
         </div>
 
         <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Regd Date</label>
-          <div class="col-sm-9">
-            <input type="date" formControlName="dateOfReg" placeholder="Date of Registered" style="width: 41%">
+          <label class="col-sm-3 col-form-label" [style]="'width: 30%;'">Regd Date</label>
+          <div class="col-sm-7">
+            <input type="date" formControlName="dateOfReg" placeholder="Date of Registered">
           </div>
         </div>
 
         <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Place</label>
-          <div class="col-sm-9">
+          <label class="col-sm-3 col-form-label" [style]="'width: 30%;'">Place</label>
+          <div class="col-sm-7">
             <input type="text" formControlName="regtdAt" placeholder="Registration Place">
           </div>
         </div>
 
         <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Phone</label>
-          <div class="col-sm-9">
+          <label class="col-sm-3 col-form-label" [style]="'width: 30%;'">Phone</label>
+          <div class="col-sm-7">
             <input type="text" formControlName="phoneNumber" placeholder="Phone Number">
           </div>
         </div>
 
         <div class="form-group row">
-          <label class="col-sm-3 col-form-label">GSTIN*</label>
-          <div class="col-sm-9">
+          <label class="col-sm-3 col-form-label" [style]="'width: 30%;'">GSTIN*</label>
+          <div class="col-sm-7" [style]="'width:40%;'">
             <input type="text" formControlName="companyGSTIN" placeholder="Company GSTIN">
           </div>
         </div>
 
         <div class="form-group row">
-          <label class="col-sm-3 col-form-label">State</label>
-          <div class="col-sm-9" style="padding-bottom: 5px;">
+          <label class="col-sm-3 col-form-label" [style]="'width: 30%;'">Street</label>
+          <div class="col-sm-7" [style]="'width:40%;'">
+            <input type="text" formControlName="street" placeholder="Street">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" [style]="'width: 30%;'">State</label>
+          <div class="col-sm-7" [style]="'padding-bottom: 2%;'">
             <select formControlName="state" (change)="onStateSelect($event)" class="col-sm-1 col-form-label"
-              style="width: 41%">
+              [style]="'width: 47%'">
               <option>Select State</option>
               <option *ngFor="let state of states">{{state.state_name}}</option>
             </select>
@@ -59,9 +66,9 @@
         </div>
 
         <div class="form-group row">
-          <label class="col-sm-3 col-form-label">City*</label>
-          <div class="col-sm-9" style="padding-bottom: 5px;">
-            <select formControlName="city" class="col-sm-2 col-form-label" style="width: 41%">
+          <label class="col-sm-3 col-form-label" [style]="'width: 30%;'">City*</label>
+          <div class="col-sm-7" [style]="'padding-bottom: 2%;'">
+            <select formControlName="city" class="col-sm-2 col-form-label" [style]="'width:47%;'">
               <option disabled>Select City</option>
               <option *ngFor="let city of cities">{{city.city_name}}</option>
             </select>
@@ -69,31 +76,30 @@
         </div>
 
         <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Street</label>
-          <div class="col-sm-9">
-            <input type="text" formControlName="street" placeholder="Street">
+          <label class="col-sm-3 col-form-label" [style]="'width: 30%;'">Upload Image</label>
+          <div class="col-sm-7" [style]="'width:50%;'">
+            <input class="form-control" formControlName="file" type="file" (change)="onFilechange($event)">
           </div>
         </div>
 
-        <button class="btn btn-primary" type="submit">Create/Update</button>
+        <button class="btn btn-primary" type="submit">Create</button>
       </form>
     </div>
 
     <div class="col">
       <br />
-      <h3 style="margin-left: 20px;">Manfacturer's Location View</h3>
-      <div style="display: block" style="height: 370px;width: 370px;">
+      <h3 [style]="'margin-left: 10%;'">Manfacturer's Location View</h3>
+      <div [style]="'height: 100%; width: 75%;'">
         <canvas mdbChart [chartType]="chartType" [datasets]="chartDatasets" [labels]="chartLabels"
           [colors]="chartColors" [options]="chartOptions" [legend]="true" (chartHover)="chartHovered($event)"
           (chartClick)="chartClicked($event)">
         </canvas>
       </div>
-
     </div>
   </div>
 
   <br /><br />
-  <h3>Manufacturer Data</h3>
+  <h3>Manufacturer Info</h3>
   <div class="row">
     <div class="col">
       <table #manfTable mat-table [dataSource]="manufacturers" class="mat-elevation-z8 manfTable">
@@ -123,6 +129,13 @@
         <ng-container matColumnDef="address">
           <th mat-header-cell *matHeaderCellDef> Address </th>
           <td mat-cell *matCellDef="let element"> {{element.address}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="View">
+          <th mat-header-cell *matHeaderCellDef> View</th>
+          <td mat-cell *matCellDef="let element">
+            <mat-icon (click)="manufacturerView($event, element)">visibility</mat-icon>
+          </td>
         </ng-container>
       </table>
 

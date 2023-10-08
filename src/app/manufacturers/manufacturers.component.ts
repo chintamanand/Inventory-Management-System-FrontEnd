@@ -19,7 +19,8 @@ export class ManufacturersComponent implements OnInit {
   dataText: string = "Manfacturer Data";
   myForm: FormGroup;
   manufacturers: Manufacturer[] = [];
-  columnsToDisplay: string[] = ['manufacturerId', 'manufacturerCompanyName', 'companyEmailAddress', 'phoneNumber', 'address'];
+  file: File;
+  columnsToDisplay: string[] = ['manufacturerId', 'manufacturerCompanyName', 'companyEmailAddress', 'phoneNumber', 'address', 'View'];
   @ViewChild('manfTable') matTable: MatTable<Element>;
 
   states: State[] = [];
@@ -69,7 +70,8 @@ export class ManufacturersComponent implements OnInit {
         state: [null],
         city: [null],
         street: [null],
-        country: ["India"]
+        country: ["India"],
+        file: [null]
       });
   }
 
@@ -121,8 +123,19 @@ export class ManufacturersComponent implements OnInit {
     this.chartLabels = Array.from(this.graphData2.keys());
   }
 
+  onFilechange(event: any) {
+    console.log("In File Change method");
+    console.log(event.target.files[0])
+    let reader = new FileReader();
+    // when the load event is fired and the file not empty
+    if(event.target.files && event.target.files.length > 0) {
+      // Fill file variable with the file content
+      this.file = event.target.files[0];
+    }
+  }
+
   onSubmit(form: FormGroup) {
-    this.manufacturerService.createOrSaveData(form).subscribe({
+    this.manufacturerService.createOrSaveData(form, this.file).subscribe({
       next: (response) => {
         if (response != null || response != undefined) {
           this.manufacturers = response;
@@ -167,6 +180,10 @@ export class ManufacturersComponent implements OnInit {
   logout(): void {
     this.tokenStorageService.signOut();
     window.location.reload();
+  }
+
+  manufacturerView(event: Event, data: Manufacturer): void{
+    console.log("Clicked Row data is -- " + JSON.stringify(data));
   }
 
 }

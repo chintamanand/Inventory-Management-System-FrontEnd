@@ -86,6 +86,7 @@ export class AuthzComponent implements OnInit {
         data => {
           console.log("In authComponent Login()");
           console.log("User Token -- " + data.token);
+          console.log("Refresh Token -- " + data.refreshToken);
           this.tokenStorage.saveToken(data.token);
           this.tokenStorage.saveUser(data);
 

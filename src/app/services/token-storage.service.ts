@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 
 const TOKEN_KEY = 'auth-token';
 const USER_KEY = 'auth-user';
+const REFRESH_TOKEN = 'auth-refresh-token';
 
 //TokenStorageService to manages token and user information inside Browser’s Session Storage. 
 //For Logout, we only need to clear this Session Storage.
@@ -60,9 +61,9 @@ export class TokenStorageService {
     this.loggedIn.next(true); this.loggedOut.next(false);
     window.sessionStorage.removeItem(USER_KEY);
     window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
+    window.sessionStorage.setItem(REFRESH_TOKEN, user.refreshToken);
   }
 
-  //It gets LoggedIn User
   public getUser(): any {
     console.log("Entered into GetUser() method");
     const user = window.sessionStorage.getItem(USER_KEY);
