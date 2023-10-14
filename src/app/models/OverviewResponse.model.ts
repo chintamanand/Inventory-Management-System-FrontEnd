@@ -1,6 +1,7 @@
 export class OverviewResponse {
-    totalManufacturerCount: number;
-    totalProductCount: number;
+    totalManufacturers: number;
+    totalProducts: number;
+    totalProductCategories: number;
     highestProductName: string;
     highestProductValue: number;
     lowestProductName: string;

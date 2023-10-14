@@ -1,3 +1,7 @@
 .prdctTable {
     width: 100%!important;
 }
+
+.mat-header-cell {
+    font-weight: bolder;
+}

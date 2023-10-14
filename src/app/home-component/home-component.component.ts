@@ -15,7 +15,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.commonService.getOverviewData().subscribe((data1: OverviewResponse) => {
-      console.log("Overview Data received is -- " + JSON.stringify(data1));
       this.data = data1;
     });
   }

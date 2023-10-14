@@ -1,3 +1,6 @@
 .manfTable {
     width: 100%;
 }
+.mat-header-cell {
+    font-weight: bolder;
+}

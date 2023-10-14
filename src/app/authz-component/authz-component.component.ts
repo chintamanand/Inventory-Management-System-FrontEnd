@@ -115,7 +115,7 @@ export class AuthzComponent implements OnInit {
   }
 
   forgotPassword(){
-    this.notificationService.showWarning("Feature is still development", "Forgot Password");
+    this.notificationService.showWarning("Feature still in development", "Forgot Password");
   }
 
 }
