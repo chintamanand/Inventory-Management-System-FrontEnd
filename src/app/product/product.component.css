@@ -1,7 +1,16 @@
 .prdctTable {
-    width: 100%!important;
+    width: 100% !important;
 }
 
 .mat-header-cell {
     font-weight: bolder;
+}
+
+.image-spacing {
+    margin-right: 5px !important;
+}
+
+.header-class {
+    color: #873030 !important;
+    background: transparent!important;
 }

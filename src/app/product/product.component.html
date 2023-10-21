@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col">
       <br />
-      <h3>Product Data</h3>
+      <h4 class="header-class">Product Data</h4>
       <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)">
 
         <div class="form-group row">
@@ -125,12 +125,12 @@
         </ng-container>
 
         <ng-container matColumnDef="totalWeightOfUnits">
-          <th mat-header-cell *matHeaderCellDef> Total Weight(Kg) </th>
+          <th mat-header-cell *matHeaderCellDef> Total Weight (Kg) </th>
           <td mat-cell *matCellDef="let element"> {{element.totalWeightOfUnits}} Kg</td>
         </ng-container>
 
         <ng-container matColumnDef="totalCost">
-          <th mat-header-cell *matHeaderCellDef> Cost(₹) </th>
+          <th mat-header-cell *matHeaderCellDef> Cost (₹) </th>
           <td mat-cell *matCellDef="let element">₹ {{element.totalCost | number:'1.1-2' }}</td>
         </ng-container>
 
@@ -140,20 +140,19 @@
         </ng-container>
 
         <ng-container matColumnDef="totalProductValue">
-          <th mat-header-cell *matHeaderCellDef> Total Value(₹) </th>
+          <th mat-header-cell *matHeaderCellDef> Total Value (₹) </th>
           <td mat-cell *matCellDef="let element">₹ {{element.totalProductValue}}</td>
         </ng-container>
 
-        <ng-container matColumnDef="productLocation">
-          <th mat-header-cell *matHeaderCellDef> Location </th>
-          <td mat-cell *matCellDef="let element"> {{element.productLocation}} </td>
-        </ng-container>
-
         <ng-container matColumnDef="Actions">
-          <th mat-header-cell *matHeaderCellDef> Actions</th>
+          <th mat-header-cell *matHeaderCellDef> <img src="../assets/images/action.png" alt="Unable to load the image"
+              width="43" height="38"></th>
           <td mat-cell *matCellDef="let element">
-            <mat-icon (click)="productEdit($event, element)">edit</mat-icon>
-            <mat-icon (click)="productDelete($event, element)">delete</mat-icon>
+            <img src="../assets/images/Edit.png" (click)="productEdit($event, element)" alt="Unable to load the image"
+              width="25" height="25" class="image-spacing">
+            <span> </span>
+            <img src="../assets/images/Remove.png" (click)="productDelete($event, element)"
+              alt="Unable to load the image" width="25" height="25">
           </td>
         </ng-container>
       </table>

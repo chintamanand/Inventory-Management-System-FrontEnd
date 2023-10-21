@@ -2,43 +2,42 @@
 
   <nav class="navbar navbar-expand-lg navbar-dark navbar-header-color static-top">
     <div class="container">
-      <img src="assets/images/SampleImage-2.jpg" alt="Unable to display Logo" height="36">
+      <img src="assets/images/ivms4.png" alt="Unable to display Logo" height="40">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
-              [routerLink]="['home']" aria-current="page">Dashboard</a>
+          <li class="nav-item" [style]="'color: #fff0f0;'">
+            <!--<a class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
+              [routerLink]="['home']" aria-current="page">Dashboard</a>-->
+            <button mat-button routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
+              [routerLink]="['dashboard']" aria-current="page">Dashboard</button>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
-              [routerLink]="['manufactuers']">Manufacturers</a>
+
+          <li class="nav-item" [style]="'color: #fff0f0;'">
+            <button mat-button routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
+              [routerLink]="['manufactuers']">Manufacturers</button>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
-              [routerLink]="['products']">Products</a>
+
+          <li class="nav-item" [style]="'color: #fff0f0;'">
+            <button mat-button routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
+              [routerLink]="['products']">Products</button>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
-              [routerLink]="['transactions']" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-              aria-expanded="false">
-              Transactions
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="/home">Purchase</a></li>
-              <li><a class="dropdown-item" href="/home">Sale</a></li>
-              <li>
-                <hr class="dropdown-divider">
-              </li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
+
+          <li class="nav-item" [style]="'color: #fff0f0;'">
+            <button mat-button [matMenuTriggerFor]="menu">Transaction</button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>View Transaction</button>
+              <button mat-menu-item routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
+              [routerLink]="['transactions']">Purchase Order</button>
+              <button mat-menu-item>Sale Order</button>
+            </mat-menu>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
-              [routerLink]="['authz']" (click)="logout()">Logout</a>
+          <li class="nav-item" [style]="'color: #fff0f0;'">
+              <button mat-button routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
+              [routerLink]="['authz']" (click)="logout()">Logout</button>
           </li>
         </ul>
       </div>
@@ -51,7 +50,7 @@
 <header *ngIf="show2$ | async as show2">
   <nav class="navbar navbar-expand-lg navbar-dark navbar-header-color static-top">
     <div class="container">
-      <img src="assets/images/SampleImage-2.jpg" alt="Unable to display Logo" height="36">
+      <img src="assets/images/ivms4.png" alt="Unable to display Logo" height="40">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>

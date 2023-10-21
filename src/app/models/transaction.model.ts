@@ -1,6 +1,8 @@
-export class StockPurchase {
+export class Transaction {
     
-    purchaseId: number;
+    transactionId: number;
+
+    transactionType: string;
 
     manufacturerId:number;
 
@@ -11,6 +13,8 @@ export class StockPurchase {
     productName: string
 
     productCategoryName: string;
+
+    unitCost: number
 
     noOfUnits: number;
 

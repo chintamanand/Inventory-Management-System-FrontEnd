@@ -63,19 +63,19 @@ export class ManufacturersComponent implements OnInit {
     private commonService: CommonService, private tokenStorageService: TokenStorageService,
     private notificationService: NotificationService, private formBuilder: FormBuilder,
     public dialog: MatDialog) {
-      this.myForm =  this.formBuilder.group({
-        manufacturerCompanyName: [null],
-        companyEmailAddress: [null, [Validators.required, Validators.email]],
-        dateOfReg: [null, Validators.required],
-        regtdAt: [null, Validators.required],
-        phoneNumber: [null, [Validators.required, Validators.minLength(10), Validators.maxLength(12)]],
-        companyGSTIN: [null, [Validators.required, Validators.min(10)]],
-        state: [null],
-        city: [null],
-        street: [null],
-        country: ["India"],
-        file: [null]
-      });
+    this.myForm = this.formBuilder.group({
+      manufacturerCompanyName: [null],
+      companyEmailAddress: [null, [Validators.required, Validators.email]],
+      dateOfReg: [null, Validators.required],
+      regtdAt: [null, Validators.required],
+      phoneNumber: [null, [Validators.required, Validators.minLength(10), Validators.maxLength(12)]],
+      companyGSTIN: [null, [Validators.required, Validators.min(10)]],
+      state: [null],
+      city: [null],
+      street: [null],
+      country: ["India"],
+      file: [null]
+    });
   }
 
   ngOnInit() {
@@ -131,7 +131,7 @@ export class ManufacturersComponent implements OnInit {
     console.log(event.target.files[0])
     let reader = new FileReader();
     // when the load event is fired and the file not empty
-    if(event.target.files && event.target.files.length > 0) {
+    if (event.target.files && event.target.files.length > 0) {
       // Fill file variable with the file content
       this.file = event.target.files[0];
     }

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -43,6 +43,18 @@ export class ProductService {
       this.notificationService.showError("Server Issue - Unable to Load Product Data", "Data Issue");
     }
     return this.products;
+  }
+
+  getProductByManufacturerName(manufacturerName: string): Observable<Products[]> {
+    let queryParams = new HttpParams().append("manufacturerName", manufacturerName);
+
+    this.products = this.httpclient.get<Products[]>(this.baseUrl + this.getPrdUrl + "/manfName", {params:queryParams});
+    if (this.products == null || this.products == undefined) {
+      this.notificationService.showError("Server Issue - Unable to Load Manufacturer Data", "Data Issue");
+      return this.products;
+    } else {
+      return this.products;
+    }
   }
 
   createOrSaveData(form: FormGroup): Observable<Products[]> {

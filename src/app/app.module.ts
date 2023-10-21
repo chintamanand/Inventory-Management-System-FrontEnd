@@ -27,16 +27,20 @@ import { ProductEditDialogComponent } from './product-edit-dialog/productEditDia
 import { MatCardModule } from '@angular/material/card';
 import { HeaderComponent } from './header/header.component';
 import { ManufactureViewDialogComponent } from './manufacturer-view-dialog/manufacturer-view-dialog.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { FilterPipe } from './filter.pipe';
 
 const routes: Routes = [
   { path: '', redirectTo: 'authz', pathMatch: 'full' },
   { path: 'home', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'app', component: AppComponent },
   { path: 'home', component: HomeComponent },
+  { path: 'dashboard', component: HomeComponent },
+  { path: 'authz', component: AuthzComponent },
+  { path: 'logout', component: AuthzComponent },
+  { path: 'app', component: AppComponent },
   { path: 'manufactuers', component: ManufacturersComponent },
   { path: 'products', component: ProductComponent },
-  { path: 'transactions', component: TransactionComponent },
-  { path: 'authz', component: AuthzComponent }
+  { path: 'transactions', component: TransactionComponent }
 ];
 
 @NgModule({
@@ -50,7 +54,8 @@ const routes: Routes = [
     AuthzComponent,
     ProductEditDialogComponent,
     HeaderComponent,
-    ManufactureViewDialogComponent
+    ManufactureViewDialogComponent,
+    FilterPipe 
   ],
   imports: [
     //Modulues or libraries which are used in project
@@ -66,7 +71,7 @@ const routes: Routes = [
     MatIconModule,
     MatDialogModule,
     MatButtonModule,
-    MatFormFieldModule,
+    MatFormFieldModule, MatMenuModule,
     MatDialogModule, MatGridListModule,
     ToastrModule.forRoot()
   ],

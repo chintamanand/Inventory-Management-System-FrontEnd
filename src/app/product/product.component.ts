@@ -31,7 +31,7 @@ export class ProductComponent implements OnInit {
   chartLabels: String[] = [];
   chartType = 'pie';
 
-  columnsToDisplay: string[] = ['productId', 'productName', 'productCategory', 'manufacturerName', 'totalWeightOfUnits', 'totalCost', 'noOfUnits', 'totalProductValue', 'productLocation', 'Actions'];
+  columnsToDisplay: string[] = ['productId', 'productName', 'productCategory', 'manufacturerName', 'totalWeightOfUnits', 'totalCost', 'noOfUnits', 'totalProductValue', 'Actions'];
   @ViewChild('prdctTable') matTable: MatTable<Element>;
   chartDatasets = [
     { data: this.dataPoints2, label: this.dataText }
