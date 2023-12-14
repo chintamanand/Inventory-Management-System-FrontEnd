@@ -1,81 +1,104 @@
 <div class="container">
-    <div class="title" style="color: #f69c9c !important; background: transparent!important;">
-        <h2>Product Order Form</h2>
-    </div>
-  <div class="d-flex">
-    <form [formGroup]="transactionForm" (ngSubmit)="onSubmit(transactionForm)">
-      <label>
-        <span class="productId" style="margin-top: 1px">Product Id <span class="required">*</span></span>
-        <input type="text" formControlName="productId" placeholder="Enter Product Id">
-      </label>
-      <label>
-        <span class="manufacturerId" style="margin-top: 1px">Manufactuer Id<span class="required">*</span></span>
-        <input type="text" formControlName="manufacturerId" placeholder="Enter Manufacturer Id">
-      </label>
-      <label>
-        <span class="noOfUnits" style="margin-top: 1px">No Of Units<span class="required">*</span></span>
-        <input type="text" formControlName="noOfUnits" placeholder="Enter No Of Units">
-      </label>
-      <label>
-        <span class="weightOfUnit" style="margin-top: 1px">Weight of Unit<span class="required">*</span></span>
-        <input type="text" formControlName="weightOfUnit" placeholder="Enter Weight of unit">
-      </label>
-      <label>
-        <span class="totalCost" style="margin-top: 1px">Total Amount<span class="required">*</span></span>
-        <input type="text" formControlName="totalCost" placeholder="Total Amount">
-      </label>
-
-      <label>
-        <span class="phone" style="margin-top: 1px;">Phone</span>
-        <input type="text" formControlName="phone" placeholder="Mobile Number">
-      </label>
-
-      <label>
-        <span class="emailAddress" style="margin-top: 1px;">Email Address</span>
-        <input type="text" formControlName="emailAddress" placeholder="Email Address">
-      </label>
-
-      <div>
-        <input type="radio" formControlName="dbt" name="dbt" value="Direct Bank Transfer"> Direct Bank Transfer
-      </div>
-      <!--<p>
-          Make your payment directly into our bank account. Please use your Order ID as the payment reference. 
-          Your order will not be shipped until the funds have cleared in our account.
-      </p>-->
-      <br/>
-      <div>
-        <input type="radio" formControlName="dbt" name="dbt" value="COD"> Cash on Delivery
-      </div>
-      <br/>
-      <div>
-        <input type="radio"  formControlName="dbt" name="dbt" value="NetBanking"> NetBanking <span>
-        <img src="assets/images/CardInfo.jpeg" alt="Unable to load the image" width="50">
-        </span>
-      </div>
-
-      <br/>
-      <button type="submit" style="width: 50% !important;">Place Order</button>
-    </form>
-
-    <div class="Yorder">
-      <table>
-        <tr>
-          <th colspan="2">Your order</th>
-        </tr>
-        <tr>
-          <td>Product Name x {{noOfUnits}}(Qty)</td>
-          <td>₹ {{totalCost}}</td>
-        </tr>
-        <tr>
-            <td>Shipping</td>
-            <td>Free shipping</td>
-          </tr>
-        <tr>
-          <td>Total Cost</td>
-          <td>₹ {{totalCost}}</td>
-        </tr>
-      </table><br>
-    </div><!-- Yorder -->
-
-   </div>
+  <div class="title">
+    <h4>Purchase Order</h4>
   </div>
+
+  <div class="d-flex">
+    <form class="horizontal-form" [formGroup]="transactionForm" (ngSubmit)="onSubmit(transactionForm)">
+      <div class="form-group">
+        <label>Select Manufacturer </label>
+        <select formControlName="manufacturerName" [(ngModel)]="manufacturerName" (change)="onManufacturerSelect($event)">
+          <option>Select Manufacturer</option>
+          <option *ngFor="let manufacturer of manufacturers | appFilter: searchText">
+            {{manufacturer.manufacturerCompanyName}}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Select Product </label>
+        <select formControlName="productName" [(ngModel)]="productName">
+          <option>Select Product</option>
+          <option *ngFor="let product of products | appFilter: searchText">
+            {{product.productName}}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Select Product Category </label>
+        <select formControlName="productCategory" [(ngModel)]="productCategory">
+          <option>Select Product Category</option>
+          <option *ngFor="let category of productCategories | appFilter: searchText">
+            {{category.categoryName}}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Quantity</label>
+        <input type="text" [(ngModel)]="noOfUnits" formControlName="noOfUnits" placeholder="Enter No Of Units">
+      </div>
+
+      <div class="form-group">
+        <label>Price</label>
+        <input type="text" [(ngModel)]="cost" formControlName="cost" placeholder="Enter Individual Cost">
+      </div>
+
+      <div class="form-group">
+        <label>Unit Weight(g)</label>
+        <input type="text" [(ngModel)]="weightOfUnit" formControlName="weightOfUnit" placeholder="Enter Weight of unit">
+      </div>
+
+      <div class="form-group" [style]="'text-align-last: center !important; margin-left: 70%!important;'">
+        <button type="submit">Add to Cart</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="table-div" *ngIf="showOrder">
+  <table>
+    <thead>
+      <tr>
+        <th><img src="../assets/images/action.png" alt="Unable to load the image" width="40" height="40"></th>
+        <th>Manufacturer</th>
+        <th>Product</th>
+        <th>Category</th>     
+        <th>Unit Price</th>
+        <th>Unit Weight(g)</th>
+        <th>Quantity</th>
+        <th>Total Weight(kg)</th>
+        <th>Total Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let transaction of requestData;let i=index">
+        <td><img src="../assets/images/delete.png" alt="Unable to load the image" width="15" height="15"
+            class="delete-icon" (click)="deleteEntry($event, i)"></td>
+        <td>{{transaction.manufacturerName}}</td>
+        <td>{{transaction.productName}}</td>
+        <td>{{transaction.productCategoryName}}</td>
+        <td>₹ {{transaction.unitCost}}</td>
+        <td>{{transaction.weightOfUnit}}</td>
+        <td>
+          <img src="../assets/images/Add.png" alt="Unable to load the image" width="20" height="20"
+            (click)="addQuantity($event, i)">
+          <span class="quantity"> {{transaction.noOfUnits}} </span>
+          <img src="../assets/images/Minus.png" alt="Unable to load the image" width="20" height="20"
+            (click)="removeQuantity($event, i)">
+        </td>
+        <td>{{transaction.totalWeight}} Kg</td>
+        <td>₹ {{transaction.productValue}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="showOrder" [style]="'margin-left: 70%!important;text-align-last: center !important;padding-bottom:1%;'">
+  <div class="place-order">
+    <p>Free Shipping : ₹ 0</p>
+    <p>Total Cart Value: {{totalCost}}</p>
+  </div>
+
+  <div class="form-group">
+    <button type="submit" (click)="placeOrder()">Place Order</button>
+  </div>
+</div>

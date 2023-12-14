@@ -1,11 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProductCategory } from '../models/productCategory.model';
 import { Products } from '../models/products.model';
 import { CommonService } from '../services/common.service';
 import { ProductService } from '../services/product.service';
 import { TokenStorageService } from '../services/token-storage.service';
+import { MatTable } from '@angular/material/table';
+import { NotificationService } from '../services/notification.service';
+import { MatDialog } from '@angular/material/dialog';
+
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ProductEditDialogComponent } from '../product-edit-dialog/productEditDialog.component';
 
 @Component({
   selector: 'app-product',
@@ -13,8 +19,7 @@ import { TokenStorageService } from '../services/token-storage.service';
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit {
-
-  dataText1: string = "Product Data";
+  dataText: string = "Product Data";
   myForm: FormGroup;
   products: Products[] = [];
   productCategories: ProductCategory[] = [];
@@ -26,8 +31,10 @@ export class ProductComponent implements OnInit {
   chartLabels: String[] = [];
   chartType = 'pie';
 
+  columnsToDisplay: string[] = ['productId', 'productName', 'productCategory', 'manufacturerName', 'totalWeightOfUnits', 'totalCost', 'noOfUnits', 'totalProductValue', 'Actions'];
+  @ViewChild('prdctTable') matTable: MatTable<Element>;
   chartDatasets = [
-    { data: this.dataPoints2, label: this.dataText1 }
+    { data: this.dataPoints2, label: this.dataText }
   ];
 
   chartColors = [
@@ -42,23 +49,33 @@ export class ProductComponent implements OnInit {
   };
 
   chartClicked(event: any): void {
-    console.log(event);
   }
 
   chartHovered(event: any): void {
-    console.log(event);
   }
 
   constructor(private productService: ProductService, private commonService: CommonService,
-    private tokenStorageService: TokenStorageService, private router: Router) {
+    private tokenStorageService: TokenStorageService, private router: Router,
+    private notificationService: NotificationService, private formBuilder: FormBuilder,
+    public dialog: MatDialog) {
+    this.myForm = this.formBuilder.group({
+      productId: [null],
+      manufacturerId: [null, [Validators.required]],
+      productName: [null, Validators.required],
+      productCategory: [null, Validators.required],
+      noOfUnits: [null],
+      weightOfUnit: [null],
+      unitCost: [null],
+      landedCost: [null],
+      productReceived: [null],
+      productLocation: [null]
+    });
   }
 
   ngOnInit() {
     console.log("Entered Product ngOnInit() ");
-
     if (this.tokenStorageService.checkIfUserLoggedIn()) {
       console.log("User Logged In");
-      this.loadFormData();
       this.loadPageData();
     } else {
       console.log("User Logged Out");
@@ -67,26 +84,11 @@ export class ProductComponent implements OnInit {
     }
   }
 
-  loadFormData(): void {
-    this.myForm = new FormGroup({
-      productId: new FormControl(''),
-      manufacturerId: new FormControl(''),
-      productName: new FormControl(''),
-      productCategory: new FormControl(''),
-      noOfUnits: new FormControl(''),
-      weightOfUnit: new FormControl(''),
-      unitCost: new FormControl(''),
-      landedCost: new FormControl(''),
-      productReceived: new FormControl(''),
-      productLocation: new FormControl('')
-    });
-
-  }
-
   loadPageData(): void {
     this.productService.getAllProductData().subscribe((data: Products[]) => {
       this.products = data;
       this.updateGraphData(this.products);
+      this.matTable.renderRows();
     });
 
     this.commonService.getProductCategories().subscribe((data: ProductCategory[]) => {
@@ -115,16 +117,30 @@ export class ProductComponent implements OnInit {
 
     this.dataPoints2 = Array.from(this.graphData2.values());
     this.chartDatasets = [
-      { data: this.dataPoints2, label: this.dataText1 }
+      { data: this.dataPoints2, label: this.dataText }
     ];
     this.chartLabels = Array.from(this.graphData2.keys());
   }
 
-  onSubmit(form: FormGroup): void {
-    this.productService.createOrSaveData(form);
-    // navigate to view after successfully save..
-    // create/get  product category information from  fixed table..
-    // transaction -> two option --  Purchase(Stock Purchase, Payment, Invoice and Email Generation, Daily report) & Sale(Sale of Stock)
+  onSubmit(formData: FormGroup) {
+    this.productService.createOrSaveData(formData).subscribe({
+      next: (response) => {
+        if (response != null || response != undefined) {
+          this.products = response;
+          this.updateGraphData(this.products);
+          this.matTable.renderRows();
+          this.myForm.reset();
+          this.notificationService.showSuccess("Product Record was created successfully", "Product Data");
+        } else {
+          this.notificationService.showError("Record was not created", "Data Issue");
+          return null;
+        }
+      },
+      error: (error) => {
+        this.notificationService.showError(error.error.message, "Data Issue");
+        return null;
+      },
+    });
   }
 
   exportData(filename: string = 'product_data.xlsx'): void {
@@ -143,4 +159,85 @@ export class ProductComponent implements OnInit {
     )
   }
 
+  productEdit(event: Event, data: Products) {
+    const dialogRef = this.dialog.open(ProductEditDialogComponent, {
+      data: data,
+      width: '600px',
+      height: '400px'
+    });
+
+    dialogRef.afterClosed().subscribe({
+      next: (response) => {
+        if (response != null || response != undefined) {
+          this.products = response;
+          this.updateGraphData(this.products);
+          this.matTable.renderRows();
+          this.myForm.reset();
+          this.notificationService.showSuccess("Product was updated Successfully", "Product Data");
+        } else {
+          //this.notificationService.showError("Record was not created", "Data Issue");
+          return null;
+        }
+      },
+      error: (error) => {
+        this.notificationService.showError(error.error.message, "Data Issue");
+        return null;
+      },
+    });
+  }
+
+
+  productDelete(event: Event, data: Products) {
+    console.log("Clicked Row data is -- " + JSON.stringify(data));
+    const dialogRef = this.dialog.open(DeleteDialog, {
+      data: data,
+    });
+
+    dialogRef.afterClosed().subscribe({
+      next: (response: Products[]) => {
+        if (response != null || response != undefined) {
+          this.products = response;
+          this.updateGraphData(this.products);
+          this.matTable.renderRows();
+        }
+      },
+      error: (error) => {
+        this.notificationService.showError(error.error.message, "Update Failure");
+        return null;
+      },
+    });
+  }
+
+}
+
+@Component({
+  selector: 'delete-dialog',
+  templateUrl: 'deleteDialog.html'
+})
+export class DeleteDialog {
+  constructor(private productService: ProductService, private notificationService: NotificationService,
+    public dialogRef: MatDialogRef<DeleteDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: Products,
+  ) { }
+
+  deleteProduct(event: Event, productId: number) {
+    console.log("Product Id -- " + productId);
+    this.productService.deleteProductById(productId).subscribe({
+      next: (response) => {
+        if (response != null || response != undefined) {
+          this.dialogRef.close(response);
+          this.notificationService.showSuccess("Product Record was deleted Successfully", "Deletion Success");
+        } else {
+          this.notificationService.showError("Record Not Found", "Deletion Issue");
+        }
+      },
+      error: (error) => {
+        this.notificationService.showError(error.error.message, "Deletion Issue");
+      },
+    });
+  }
+
+  closeDialog() {
+    this.dialogRef.close();
+  }
 }

@@ -4,7 +4,19 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://localhost:8080/api/'
+  baseUrl: 'http://localhost:8080/api/',
+  authSignInPath: 'auth/signin',
+  authSignUpPath: 'auth/signup',
+  getManfUrl: 'manufacturer/get',
+  updManfUrl: 'manufacturer/create-update',
+  getPrdUrl: 'products/get',
+  updPrdUrl: 'products/create-update',
+  deletePrdUrl: 'products/',
+  getStateUrl: 'data/getStates',
+  getCitiesUrl: 'data/getCities',
+  getCatgUrl: 'data/getCategory',
+  genXcelUrl: 'data/generateXcel/',
+  getOverviewUrl: 'data/getOverview',
 };
 
 /*

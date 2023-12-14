@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Manufacturer } from '../models/manufacturer.model';
 import { ManufacturerService } from '../services/manufacturer.service';
 import { CommonService } from '../services/common.service';
@@ -7,6 +7,10 @@ import { State } from '../models/state.model';
 import { City } from '../models/city.model';
 import { TokenStorageService } from '../services/token-storage.service';
 import { Router } from '@angular/router';
+import { MatTable } from '@angular/material/table';
+import { NotificationService } from '../services/notification.service';
+import { ManufactureViewDialogComponent } from '../manufacturer-view-dialog/manufacturer-view-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-manufacturers',
@@ -14,10 +18,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./manufacturers.component.css']
 })
 export class ManufacturersComponent implements OnInit {
-
-  dataText1: string = "Manfacturer Data";
+  dataText: string = "Manfacturer Data";
   myForm: FormGroup;
   manufacturers: Manufacturer[] = [];
+  file: File;
+  columnsToDisplay: string[] = ['manufacturerId', 'manufacturerCompanyName', 'companyEmailAddress', 'phoneNumber', 'address', 'View'];
+  @ViewChild('manfTable') matTable: MatTable<Element>;
+
   states: State[] = [];
   cities: City[] = [];
 
@@ -28,12 +35,11 @@ export class ManufacturersComponent implements OnInit {
   chartLabels: String[] = [];
   chartType = 'pie';
 
-  private roles: string[] = [];
   isLoggedIn = false;
   username?: string;
 
   chartDatasets = [
-    { data: this.dataPoints2, label: this.dataText1 }
+    { data: this.dataPoints2, label: this.dataText }
   ];
 
   chartColors = [
@@ -48,44 +54,38 @@ export class ManufacturersComponent implements OnInit {
   };
 
   chartClicked(event: any): void {
-    console.log(event);
   }
 
   chartHovered(event: any): void {
-    console.log(event);
   }
 
   constructor(private manufacturerService: ManufacturerService, private router: Router,
-    private commonService: CommonService, private tokenStorageService: TokenStorageService) {
+    private commonService: CommonService, private tokenStorageService: TokenStorageService,
+    private notificationService: NotificationService, private formBuilder: FormBuilder,
+    public dialog: MatDialog) {
+    this.myForm = this.formBuilder.group({
+      manufacturerCompanyName: [null],
+      companyEmailAddress: [null, [Validators.required, Validators.email]],
+      dateOfReg: [null, Validators.required],
+      regtdAt: [null, Validators.required],
+      phoneNumber: [null, [Validators.required, Validators.minLength(10), Validators.maxLength(12)]],
+      companyGSTIN: [null, [Validators.required, Validators.min(10)]],
+      state: [null],
+      city: [null],
+      street: [null],
+      country: ["India"],
+      file: [null]
+    });
   }
 
   ngOnInit() {
-    console.log("Entered Manufacturer ngOnInit() ");
-
     if (this.tokenStorageService.checkIfUserLoggedIn()) {
-      this.loadFormData();
       this.loadPageData();
     } else {
       this.tokenStorageService.signOut();
       this.router.navigate(['authz'])
     }
 
-  }
-
-  loadFormData(): void {
-    this.myForm = new FormGroup({
-      manufacturerId: new FormControl(''),
-      manufacturerCompanyName: new FormControl(''),
-      companyEmailAddress: new FormControl(''),
-      dateOfReg: new FormControl(''),
-      regtdAt: new FormControl(''),
-      phoneNumber: new FormControl(''),
-      companyGSTIN: new FormControl(''),
-      state: new FormControl('Bihar'),
-      city: new FormControl(''),
-      street: new FormControl(''),
-      country: new FormControl('India')
-    });
   }
 
   loadPageData(): void {
@@ -96,6 +96,7 @@ export class ManufacturersComponent implements OnInit {
     this.manufacturerService.getAllManufacturerData().subscribe((data: Manufacturer[]) => {
       this.manufacturers = data;
       this.updateGraphData(this.manufacturers);
+      this.matTable.renderRows();
     });
   }
 
@@ -120,13 +121,41 @@ export class ManufacturersComponent implements OnInit {
 
     this.dataPoints2 = Array.from(this.graphData2.values());
     this.chartDatasets = [
-      { data: this.dataPoints2, label: this.dataText1 }
+      { data: this.dataPoints2, label: this.dataText }
     ];
     this.chartLabels = Array.from(this.graphData2.keys());
   }
 
+  onFilechange(event: any) {
+    console.log("In File Change method");
+    console.log(event.target.files[0])
+    let reader = new FileReader();
+    // when the load event is fired and the file not empty
+    if (event.target.files && event.target.files.length > 0) {
+      // Fill file variable with the file content
+      this.file = event.target.files[0];
+    }
+  }
+
   onSubmit(form: FormGroup) {
-    this.manufacturerService.createOrSaveData(form);
+    this.manufacturerService.createOrSaveData(form, this.file).subscribe({
+      next: (response) => {
+        if (response != null || response != undefined) {
+          this.manufacturers = response;
+          this.updateGraphData(this.manufacturers);
+          this.matTable.renderRows();
+          this.myForm.reset();
+          this.notificationService.showSuccess("Manufacturer record was created successfully", "Manufacturer Data");
+        } else {
+          this.notificationService.showError("Record was not created", "Data Issue");
+          return null;
+        }
+      },
+      error: (error) => {
+        this.notificationService.showError(error.error.message, "Data Issue");
+        return null;
+      },
+    });
   }
 
   onStateSelect(event: Event) {
@@ -154,6 +183,33 @@ export class ManufacturersComponent implements OnInit {
   logout(): void {
     this.tokenStorageService.signOut();
     window.location.reload();
+  }
+
+  manufacturerView(event: Event, data: Manufacturer): void {
+    console.log("Manufacturer View Clicked" + JSON.stringify(data));
+    const dialogRef = this.dialog.open(ManufactureViewDialogComponent, {
+      data: data,
+      width: '400px',
+      height: '350px'
+    });
+
+    dialogRef.afterClosed().subscribe({
+      next: (response) => {
+        if (response != null || response != undefined) {
+          // this.manufacturers = response;
+          // this.updateGraphData(this.manufacturers);
+          // this.matTable.renderRows();
+          // this.myForm.reset();
+          //this.notificationService.showSuccess("Manufacturer was updated Successfully", "Product Data");
+        } else {
+          return null;
+        }
+      },
+      error: (error) => {
+        this.notificationService.showError(error.error.message, "Data Issue");
+        return null;
+      },
+    });
   }
 
 }

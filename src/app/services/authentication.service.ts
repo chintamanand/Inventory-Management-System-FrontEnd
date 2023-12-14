@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { environment } from 'src/environments/environment';
+import { SignupRequest } from '../models/signupRequest.model';
 
 const headers = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -12,22 +13,28 @@ const headers = {
   providedIn: 'root'
 })
 export class AuthenticationService {
-
   baseUrl: string = environment.baseUrl;
-
+  authSignIn: string = environment.authSignInPath;
+  authSignUp: string = environment.authSignUpPath;
+  roles: string[] = [];
   constructor(private http: HttpClient) {
   }
 
   //User Login
   login(username: string, password: string): Observable<any> {
-    return this.http.post(this.baseUrl + 'auth/signin', {username, password}, headers);
+    return this.http.post(this.baseUrl + this.authSignIn, { username, password }, headers);
   }
 
   //User Registration
   register(username: string, email: string, password: string): Observable<any> {
-    return this.http.post(this.baseUrl + 'auth/signup', {
-      username, email, password
-    }, headers);
+    const signUpRequest: SignupRequest = new SignupRequest();
+    this.roles = [];
+    signUpRequest.username = username;
+    signUpRequest.email = email;
+    signUpRequest.password = password;
+    this.roles.push("admin");
+    signUpRequest.role = this.roles;
+    return this.http.post(this.baseUrl + this.authSignUp, signUpRequest, headers);
   }
 
 }

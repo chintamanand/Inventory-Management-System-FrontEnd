@@ -1,0 +1,68 @@
+<div>
+    <h5 [style]="'padding-left:1%;'">Dashboard</h5>
+
+    <mat-grid-list cols="5" rowHeight="5%" [style]="'margin-left:10px;'">
+        <mat-grid-tile>
+            <mat-card class="my-card">
+                <mat-card-title [style]="'font-weight:300;'">
+                    <img src="../assets/images/Manufacturer.png" alt="Unable to fetch image" width="50" height="55">
+                    Manufacturers
+                </mat-card-title>
+                <mat-card-content>
+                    <span [style]="'padding-left:50%;font-weight:400;'">{{data.totalManufacturers}}</span>
+                </mat-card-content>
+            </mat-card>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+            <mat-card class="my-card">
+                <mat-card-title [style]="'font-weight:300;'">
+                    <img src="../assets/images/ManufacturerAdded.png" alt="Unable to fetch image" width="50"
+                        height="55">
+                    New Makers
+                </mat-card-title>
+                <mat-card-content>
+                    <span [style]="'padding-left:50%;font-weight:400;'"> {{data.noOfManufacturersRecAdded}}</span>
+                </mat-card-content>
+            </mat-card>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+            <mat-card class="my-card">
+                <mat-card-title [style]="'font-weight:300;'">
+                    <img src="../assets/images/Product.png" alt="Unable to fetch image" width="50" height="55">
+                    Products
+                </mat-card-title>
+                <mat-card-content>
+                    <span [style]="'padding-left:50%;font-weight:400;'">{{data.totalProducts}}</span>
+                </mat-card-content>
+            </mat-card>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+            <mat-card class="my-card">
+                <mat-card-title [style]="'font-weight:300;'">
+                    <img src="../assets/images/ProductAdded.png" alt="Unable to fetch image" width="50" height="55">
+                    New Products
+                </mat-card-title>
+                <mat-card-content>
+                    <span [style]="'padding-left:50%;font-weight:400;'">{{data.noOfProductsRecAdded}}</span>
+                </mat-card-content>
+            </mat-card>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+            <mat-card class="my-card">
+                <mat-card-title [style]="'font-weight:300;'">
+                    <img src="../assets/images/ProductCategory.png" alt="Unable to fetch image" width="50" height="55">
+                    Categories
+                </mat-card-title>
+                <mat-card-content>
+                    <span [style]="'padding-left:50%;font-weight:400;'">{{data.totalProductCategories}}</span>
+                </mat-card-content>
+            </mat-card>
+        </mat-grid-tile>
+
+    </mat-grid-list>
+
+</div>

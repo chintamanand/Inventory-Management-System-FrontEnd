@@ -1,145 +1,167 @@
 <div class="container">
-    <div class="row">
-      <div class="col">
-        
-        <br/>
-        <h3>Product Data Updation</h3>
-        <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)">
-          
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Product Id</label>
-            <div class="col-sm-9">
-              <input type="text" formControlName="productId" placeholder="Product Id (Optional)">
-            </div>
-          </div>  
-        
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Manufacturer Id</label>
-            <div class="col-sm-9">
-              <input type="text" formControlName="manufacturerId" placeholder="Manufacturer Id">
-            </div>
-          </div>  
+  <div class="row">
+    <div class="col">
+      <br />
+      <h4 class="header-class">Product Data</h4>
+      <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)">
 
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Product Name</label>
-            <div class="col-sm-9">
-              <input type="text" formControlName="productName" placeholder="Enter Product Name">
-            </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" [style]="'width: 30%;'">Product Id</label>
+          <div class="col-sm-7">
+            <input type="text" formControlName="productId" placeholder="Product Id (Optional)">
           </div>
-          
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Category</label>
-            <div class="col-sm-9" style = "padding-bottom: 5px;">
-            <select formControlName = "productCategory" class = "col-sm-1 col-form-label" style = "width: 41%">
-              <option disabled>Select Category</option>
-              <option *ngFor = "let category of productCategories">{{category.categoryName}}</option>
-            </select>
-            </div>
-          </div>
-
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Weight Of Each Unit</label>
-            <div class="col-sm-9">
-              <input type="text" formControlName="weightOfUnit" placeholder="Enter Weight Of Unit(g)">
-            </div>
-          </div> 
-
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">No Of Units</label>
-            <div class="col-sm-9">
-              <input type="text" formControlName="noOfUnits" placeholder="Enter No Of Units">
-            </div>
-          </div>  
-
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Unit Cost</label>
-            <div class="col-sm-9">
-              <input type="text" formControlName="unitCost" placeholder="Unit Cost(₹)">
-            </div>
-          </div> 
-
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Landed Cost</label>
-            <div class="col-sm-9">
-              <input type="text" formControlName="landedCost" placeholder="Import/Shipping Cost(₹)">
-            </div>
-          </div> 
-
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Product Received</label>
-            <div class="col-sm-9">
-              <input type="date" formControlName="productReceived" placeholder="Product Received" style = "width: 41%">
-            </div>
-          </div> 
-
-          <!--Storage location in Inventory-->
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Product Location</label>
-            <div class="col-sm-9">
-              <input type="text" formControlName="productLocation" placeholder="Product Location">
-            </div>
-          </div> 
-          
-          <button class="btn btn-primary" type="submit">Create/Update</button>
-        </form>
-      </div>
-
-      <div class="col">
-        <br/>
-        <h3 style="margin-left: 20px;">Product Category View</h3>
-        <div style="display: block" style="height: 370px;width: 370px;">
-          <canvas mdbChart
-            [chartType]="chartType"
-            [datasets]="chartDatasets"
-            [labels]="chartLabels"
-            [colors]="chartColors"
-            [options]="chartOptions"
-            [legend]="true"
-            (chartHover)="chartHovered($event)"
-            (chartClick)="chartClicked($event)">
-          </canvas>
         </div>
 
-      </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" [style]="'width: 30%;'">Manufacturer Id*</label>
+          <div class="col-sm-7">
+            <input type="text" formControlName="manufacturerId" placeholder="Manufacturer Id">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" [style]="'width: 30%;'">Product Name*</label>
+          <div class="col-sm-7">
+            <input type="text" formControlName="productName" placeholder="Enter Product Name">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" [style]="'width: 30%;'">Category*</label>
+          <div class="col-sm-7" style="padding-bottom: 5px;">
+            <select formControlName="productCategory" class="col-sm-1 col-form-label" style="width: 50%">
+              <option>Select Category</option>
+              <option *ngFor="let category of productCategories">{{category.categoryName}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" [style]="'width: 30%;'">Weight Of Each Unit</label>
+          <div class="col-sm-7">
+            <input type="text" formControlName="weightOfUnit" placeholder="Enter Weight Of Unit(g)">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" [style]="'width: 30%;'">No Of Units</label>
+          <div class="col-sm-7">
+            <input type="text" formControlName="noOfUnits" placeholder="Enter No Of Units">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" [style]="'width: 30%;'">Unit Cost</label>
+          <div class="col-sm-7">
+            <input type="text" formControlName="unitCost" placeholder="Unit Cost(₹)">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" [style]="'width: 30%;'">Landed Cost</label>
+          <div class="col-sm-7">
+            <input type="text" formControlName="landedCost" placeholder="Import/Shipping Cost(₹)">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" [style]="'width: 30%;'">Product Received</label>
+          <div class="col-sm-7" [style]="'width:50%;'">
+            <input type="date" formControlName="productReceived" placeholder="Product Received">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" [style]="'width: 30%;'">Product Location</label>
+          <div class="col-sm-7">
+            <input type="text" formControlName="productLocation" placeholder="Product Location">
+          </div>
+        </div>
+
+        <button class="btn btn-primary" type="submit">Create/Update</button>
+      </form>
     </div>
 
-    <br/><br/>
-    <h3>Product Data</h3>
-    <div class="row">
-      <div class="col">
-        <table class="table table-hover">
-          <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Product Name</th>
-            <th scope="col">Product Category</th>
-            <th scope="col">Manufacturer Name</th>
-            <th scope="col">Total Weight(kg)</th>
-            <th scope="col">Total Cost(₹)</th>
-            <th scope="col">Total Value(₹)</th>
-            <th scope="col">Product Location</th>
-          </tr>
-          
-          <tr *ngFor="let product of products">
-              <!--<td>select option need to be included</td>-->
-              <td>{{product.productId}}</td>
-              <td>{{product.productName}}</td>
-              <td>{{product.productCategory}}</td>
-              <td>{{product.manufacturerName}}</td>
-              <td>{{product.totalWeightOfUnits.toFixed(2) | number}} kg</td>
-              <td>₹ {{product.totalCost.toFixed(2) | number}}</td>
-              <td>₹ {{product.totalProductValue.toFixed(2) | number}}</td>
-              <td>{{product.productLocation}}</td>
-          </tr>
-
-        </table>
-
+    <div class="col">
+      <br />
+      <h3 [style]="'margin-left: 10%;'">Product's Category View</h3>
+      <div [style]="'height: 100%; width: 75%;'">
+        <canvas mdbChart [chartType]="chartType" [datasets]="chartDatasets" [labels]="chartLabels"
+          [colors]="chartColors" [options]="chartOptions" [legend]="true" (chartHover)="chartHovered($event)"
+          (chartClick)="chartClicked($event)">
+        </canvas>
       </div>
-      
     </div>
-
-
-    <br/>
-    <button class="btn btn-primary" (click)="exportData()">Export Data</button>
 
   </div>
-  <br/>
+
+  <br /><br />
+  <h3>Product Info</h3>
+  <div class="row">
+    <div class="col">
+
+      <table #prdctTable mat-table [dataSource]="products" class="mat-elevation-z8 manfTable" [style]="'width: 100%'">
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+        <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+
+        <ng-container matColumnDef="productId">
+          <th mat-header-cell *matHeaderCellDef> Id </th>
+          <td mat-cell *matCellDef="let element"> {{element.productId}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="productName">
+          <th mat-header-cell *matHeaderCellDef> Product Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="productCategory">
+          <th mat-header-cell *matHeaderCellDef> Category </th>
+          <td mat-cell *matCellDef="let element"> {{element.productCategory}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="manufacturerName">
+          <th mat-header-cell *matHeaderCellDef> Manufacturer Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.manufacturerName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="totalWeightOfUnits">
+          <th mat-header-cell *matHeaderCellDef> Total Weight (Kg) </th>
+          <td mat-cell *matCellDef="let element"> {{element.totalWeightOfUnits}} Kg</td>
+        </ng-container>
+
+        <ng-container matColumnDef="totalCost">
+          <th mat-header-cell *matHeaderCellDef> Cost (₹) </th>
+          <td mat-cell *matCellDef="let element">₹ {{element.totalCost | number:'1.1-2' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="noOfUnits">
+          <th mat-header-cell *matHeaderCellDef> Quantity </th>
+          <td mat-cell *matCellDef="let element"> {{element.noOfUnits}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="totalProductValue">
+          <th mat-header-cell *matHeaderCellDef> Total Value (₹) </th>
+          <td mat-cell *matCellDef="let element">₹ {{element.totalProductValue}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="Actions">
+          <th mat-header-cell *matHeaderCellDef> <img src="../assets/images/action.png" alt="Unable to load the image"
+              width="43" height="38"></th>
+          <td mat-cell *matCellDef="let element">
+            <img src="../assets/images/Edit.png" (click)="productEdit($event, element)" alt="Unable to load the image"
+              width="25" height="25" class="image-spacing">
+            <span> </span>
+            <img src="../assets/images/Remove.png" (click)="productDelete($event, element)"
+              alt="Unable to load the image" width="25" height="25">
+          </td>
+        </ng-container>
+      </table>
+
+    </div>
+  </div>
+
+  <br />
+  <button class="btn btn-primary" (click)="exportData()" [style]="'margin-bottom:15px;'">Export Data</button>
+</div>
+
+<!--Total Inventory Value & Total Capacity Holding Value need to be added into the homePage -->
