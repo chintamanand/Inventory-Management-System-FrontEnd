@@ -32,9 +32,8 @@
               "src/styles.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
-            "scripts": [
-                        "node_modules/chart.js/dist/Chart.js",
-                        "node_modules/hammerjs/hammer.min.js"]
+            "scripts": [ "node_modules/chart.js/dist/Chart.js",
+                         "node_modules/hammerjs/hammer.min.js" ]
           },
           "configurations": {
             "production": {
@@ -104,9 +103,8 @@
               "src/styles.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
-            "scripts": [
-                        "node_modules/chart.js/dist/Chart.js",
-                        "node_modules/hammerjs/hammer.min.js"]
+            "scripts": [ "node_modules/chart.js/dist/Chart.js",
+                         "node_modules/hammerjs/hammer.min.js" ]
           }
         }
       }
